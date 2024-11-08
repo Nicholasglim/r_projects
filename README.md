@@ -34,6 +34,7 @@ According to PCA loading, component 1 captures 84.3% of the variable (whole weig
 
 ### K-Means Clustering
 ![image](https://github.com/user-attachments/assets/fc7fc1c9-04ee-454b-92b8-40bfc050edee)
+
 **Fig. 4 Within Sum Squares (WSS) plot**
 
 According to the WSS plot in figure 5, there is a diminishing return after cluster 3. Therefore, the optimal number of clusters is 3.
@@ -61,6 +62,13 @@ WSS shows the internal variability of each cluster, with cluster 2 having more v
 
 The ratio of 76.0% means that 76% of the total variance in the data is explained by the clustering, which indicates a reasonably good separation between clusters.
 
+### Cluster plot
+![image](https://github.com/user-attachments/assets/761532a4-5f9b-4358-b410-5e33a3973e3b)
+
+**Fig. 6 Cluster plot**
+
+Analysing the 3 clusters in figure 6, we can observe that cluster 1’s mean ranges around 0. Cluster 2 ranges around 1 and cluster 3 ranges around -1. From this information, we can identify that the clusters are well segregated. As shown in figure 7, the visualisations of clusters 1, 2 and 3 are more represented in the x-axis than in y-axis. There were some slight outliers in clusters 1 on the y-axis. Cluster 2 has a moderate number of outliers. Cluster 3 has a large number of outliers.
+
 # Supervised Learning
 
 ## Regression
@@ -85,6 +93,31 @@ Through the use of Machine Learning algorithms, the formulation of concrete can 
 ![image](https://github.com/user-attachments/assets/ebb50658-f966-442e-8bdb-e7b12c8b2a61)
 
 **Fig.8 Scatterplot Matrix of concrete strength dataset**
+
+### Linear Regression
+Using a Train-Test split of 70:30
+<div style="display: flex; gap: 10px;">
+  <img src="https://github.com/user-attachments/assets/71690310-5a12-4c5d-96b6-64ff2b3d5cea" alt="image1" width="500"/>
+  <img src="https://github.com/user-attachments/assets/e0bcf14c-aa84-448d-b900-327916f77917" alt="image2" width="300"/>
+  </div>
+  
+**Fig.9 Linear Regression Model (left), summary of trainset (right-top) & testset (right-bottom)**
+
+According to the results of the linear regression model, the adjusted R-squared value is 0.6155, explaining 61.55% of the variance in the dependent variable (CCS) with the independent variables. Along with summary values of the testset with higher median, mean and max but lower min than the trainset.
+
+### Forward Selection & Backward Elimination
+<div style="display: flex; gap: 10px;">
+  <img src="https://github.com/user-attachments/assets/db67c097-3e9d-49dd-ae3f-c32468d78f9b" alt="image1" width="500"/>
+  <img src="https://github.com/user-attachments/assets/2255c5c2-fa75-4fbb-af81-6bd80d6d8c66" alt="image2" width="500"/>
+</div>
+
+**Fig.10 Trainset analysis of Forward Selection (left) & Backwards Elimination (right)**
+
+### Stepwise Regression
+  ![image](https://github.com/user-attachments/assets/78763cf4-0f32-4dfc-9ee2-f264fdcbe67d)
+  
+**Fig.11 Stepwise regression Trainset analysis**
+
 
 ## Classification
 Dataset: https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction
