@@ -192,9 +192,9 @@ Through the use of Machine Learning algorithms, procedures for early detection o
 ![image](https://github.com/user-attachments/assets/256a3083-ba5d-4411-ba86-81e6c37ad727)
 ![image](https://github.com/user-attachments/assets/c6cd38f1-b666-4f8b-ad9e-552d035eab2e)
 **Fig.19 Logistic Regression model 1 (left) & Logistic Regression model 2 with manual removal (right)**
-
-Variables (Age, RestingBP, RestingECGST, & MaxHR) removed due to p-value (>0.05), leading to Logistic Regression 2.
-
+```
+Logistic Regression 2 have variables (Age, RestingBP, RestingECGST, & MaxHR) removed due to p-value >0.05.
+```
 ### Bootstrap
 ![image](https://github.com/user-attachments/assets/459858e8-9eed-48a8-a607-2ce5eb8a52e5)
 
@@ -204,6 +204,7 @@ According to the logistic regression with manual removal of non-statistically si
 
 ![image](https://github.com/user-attachments/assets/756c6594-82e0-40b7-99e4-0e09c994e8d7)
 ![image](https://github.com/user-attachments/assets/f9861bc9-b8f3-44d2-9b31-2d3657409b29)
+
 **Fig.21 Visualisation (left) and details (right) of confusion matrix**
 
 Confusion matrix accuracy is 86.71%. The percentage of false positives is 13.29%.
@@ -290,6 +291,7 @@ After doing model selection, the logistic regression model is fitted with lasso 
 
 ### Results
 ![image](https://github.com/user-attachments/assets/c86f7ab4-cbe9-4878-b8bd-39212ab03678)
+
 **Table 1**
 
 In the 1st standard logistic regression, the AIC is 626.19. The 2nd standard logistic regression with manual removal of non-statistically significant variables AIC is 621.61. While the bootstrap logistic regression AIC is 619.81. As the bootstrap model has the lowest AIC, it is considered the best of the 3 models. Providing better trade-off between goodness of fit and complexity.
