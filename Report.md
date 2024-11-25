@@ -43,6 +43,7 @@ According to the WSS plot in figure 5, there is a diminishing return after clust
 <img src="https://github.com/user-attachments/assets/b729ea0a-39db-4eec-9fc6-56876774be26" alt="image" width="360"/>
 
 **Fig. 5 K-Means Clustering analysis**
+
 Analysing the 3 clusters in figure 6, we can observe that cluster 1 (Red)'s mean ranges around 0. Cluster 2 ranges around 1 and cluster 3 ranges around -1. From this information, we can identify that the clusters are well segregated.
 
 #### Cluster sizes: 
