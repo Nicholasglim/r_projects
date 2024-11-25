@@ -1,4 +1,5 @@
-# Unsupervised learning
+# This project showcases both Unsupervised & Supervised Machine Learning techniques, inclusing Regression & Classification.
+## Unsupervised learning
 Dataset: https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset
 
 ### Introduction
@@ -73,7 +74,7 @@ In Figure 6, the visualizations of clusters 1, 2, and 3 show that the distributi
 Cluster 1 (red) has a moderate number of outliers, primarily along the y-axis, indicating some variability in PC2. Cluster 2 (green) has a large number of data points with a wider spread in both PC1 and PC2, showing more pronounced outliers compared to the other clusters. Cluster 3 (blue) has the fewest outliers, though its outliers appear more extreme in distance from the cluster's main concentration, particularly along the y-axis. Overall, Cluster 3 appears more compact, while Cluster 2 shows the greatest spread and variability.
 
 *******************************************************************************************************************************************************************
-# Supervised Learning
+## Supervised Learning
 
 ## Regression
 Dataset: https://www.kaggle.com/datasets/niteshyadav3103/concrete-compressive-strength
