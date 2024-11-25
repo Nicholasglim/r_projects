@@ -4,7 +4,7 @@ Dataset: https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset
 ### Introduction
 Abalone is a type of marine mollusk that are prized for their meat and iridescent shells in many cultures. Additionally, as a marine mollusk, abalones play a vital role of cleaning the ocean and improving water quality through the process of filter feeding.
 
-The dataset consists of the dependent variable of rings and independent variable of sex, length, diameter, height, whole weight, shucked weight, viscera weight and shell weight.
+The dataset consists of the Dependent Variable of number of rings (indicating age) and Independent Variables of sex, length, diameter, height, whole weight, shucked weight, viscera weight and shell weight.
 
 Through the analysis of machine learning, a regulation about abalone harvesting can be backed up by statistics and data to ensure the sustainability of abalone and prevent overexploitation. Similarly to lobster fishing, the dimensions and weight is used to assess suitability of harvest.
 
@@ -81,7 +81,7 @@ Dataset: https://www.kaggle.com/datasets/niteshyadav3103/concrete-compressive-st
 ### Introduction
 Concrete is a ubiquitous building material and a cornerstone of construction for millennia. From foundational structures to towering skyscrapers, bridges and even the Colosseum of ancient Rome. Concrete’s versatility and reliability has been an indispensable component of construction, facilitating the advancement of civilisations.
 
-The dataset consists of the dependent variable of concrete compressive strength and 8 independent variables of cement, blast furnace slag, fly ash, water, superplasticizer, coarse and fine aggregate, and age.
+The dataset consists of the Dependent Variable of concrete compressive strength and 8 Independent Variables of cement, blast furnace slag, fly ash, water, superplasticizer, coarse and fine aggregate, and age.
 
 Compressive strength of concrete is expressed in a non-linear function of age and constituent ingredients. Through the process of hydration, the mixture of materials reacts with water to rapidly gain strength at the initial stage. As the curing process continues, strength increases at a gradual rate and slows down overtime. 
 
@@ -184,7 +184,7 @@ Dataset: https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction
 ### Introduction
 Cardiovascular disease is the leading cause of death, accounting for nearly 1/3 of all deaths worldwide. A further 1/3 of cardiovascular deaths occur in people under 70 years old. Lifestyle factors such as an abundance of unhealthy food and general lack of exercise has contributed significantly to the development of cardiovascular disease. 
 
-The dataset consists of the dependent variable of heart disease and 11 independent variables of age, sex, chest pain type, resting blood pressure, cholesterol, fasting blood sugar, resting electrocardiogram, max heart rate, exercise angina, old peak and ST slope.
+The dataset consists of the Dependent Variable of heart disease and 11 Independent Variables of age, sex, chest pain type, resting blood pressure, cholesterol, fasting blood sugar, resting electrocardiogram, max heart rate, exercise angina, old peak and ST slope.
 
 Through the use of Machine Learning algorithms, procedures for early detection of cardiovascular disease for doctors and nurses will be streamlined and remedial action can be taken.
 
