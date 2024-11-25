@@ -4,7 +4,7 @@ Dataset: https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset
 ### Introduction
 Abalone is a type of marine mollusk that are prized for their meat and iridescent shells in many cultures. Additionally, as a marine mollusk, abalones play a vital role of cleaning the ocean and improving water quality through the process of filter feeding.
 
-The dataset consists of the Dependent Variable of number of rings (indicating age) and Independent Variables of sex, length, diameter, height, whole weight, shucked weight, viscera weight and shell weight.
+The dataset consists of the Dependent Variable of number of rings (indicating age) and 8 Independent Variables of sex, length, diameter, height, whole weight, shucked weight, viscera weight and shell weight.
 
 Through the analysis of machine learning, a regulation about abalone harvesting can be backed up by statistics and data to ensure the sustainability of abalone and prevent overexploitation. Similarly to lobster fishing, the dimensions and weight is used to assess suitability of harvest.
 
