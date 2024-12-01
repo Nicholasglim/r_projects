@@ -8,7 +8,7 @@ List of datasets along with descriptions
 **Original source**: https://archive.ics.uci.edu/dataset/1/abalone
 
 **Dataset**: Concrete Compressive Strength.csv
-**Description**: Predict concrete compressive strength from ingredients.
+**Description**: Predict concrete compressive strength from varying concrete mixtures
 **Variables**: `Cement` , `Blast Furnace Slag`, `Fly Ash`, `Water`, `Superplasticizer`, `Coarse Aggregate`, `Fine Aggregate`, `Age`, `Concrete Compressive Strength`
 
 **Source**: https://www.kaggle.com/datasets/niteshyadav3103/concrete-compressive-strength
@@ -17,7 +17,7 @@ List of datasets along with descriptions
 
 
 **Dataset**: heart.csv
-**Description**: Predict presence of heart disease from health features.
+**Description**: Predict presence of heart disease from health indicators
 **Variables**: `Age` , `Sex`, `ChestPainType`, `RestingBP`, `Cholesterol`, `FastingBS`, `RestingECG`, `MaxHR`, `ExceriseAngina`, `Oldpeak`, `ST_Slope`, `HeartDisease`
 
 **Source**: https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction
