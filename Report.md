@@ -1,4 +1,14 @@
-# Unsupervised learning
+# This project showcases both Unsupervised & Supervised Machine Learning techniques, including Regression & Classification.
+
+The first showcase uses Unsupervised Machine Learning techniques to determinine the age of abalones by counting the number of rings, similar to how tree rings indicate age. Each ring typically represents one year. However, due to the smaller size of abalone rings, they must be stained with dye to make them visible under a microscope. However, further information such as weather patterns and location may be needed to obtain more accurate results
+
+The second showcase uses regression techniques to evaluate concrete compressive strength under various combinations of concrete mixtures.
+
+The third showcase uses classification methods to detect the presence of heart disease, using 11 indicators.
+
+---
+List of datasets along with description
+---
 Dataset: https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset
 
 ### Introduction
