@@ -1,7 +1,24 @@
-# This project showcases both Unsupervised & Supervised Machine Learning techniques, including Regression & Classification.
-## Unsupervised
-The first showcase involves determining the age of abalones by counting the number of rings, similar to how tree rings indicate age. Each ring typically represents one year. However, due to the smaller size of abalone rings, they must be stained with dye to make them visible under a microscope. However, further information such as weather patterns and location may be needed to obtain more accurate results
-## Supervised
-The second showcase involves evaluating concrete compressive strength under various combinations of combinations of concrete mixtures.
+List of datasets along with descriptions
+---
+**Dataset**: abalone.csv 
+**Description**: Predict the age of abalone from physical measurements.
+**Variables**: `Sex` , `Length`, `Diameter`, `Height`, `Whole weight`, `Shucked weight`, `Viscera weight`, `Shell weight`, `Rings`
 
-The third showcase involves detecting the presence of heart disease, using 11 indicators.
+**Source**: https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset
+**Original source**: https://archive.ics.uci.edu/dataset/1/abalone
+
+**Dataset**: Concrete Compressive Strength.csv
+**Description**: Predict concrete compressive strength from ingredients.
+**Variables**: `Cement` , `Blast Furnace Slag`, `Fly Ash`, `Water`, `Superplasticizer`, `Coarse Aggregate`, `Fine Aggregate`, `Age`, `Concrete Compressive Strength`
+
+**Source**: https://www.kaggle.com/datasets/niteshyadav3103/concrete-compressive-strength
+**Original source**: https://archive.ics.uci.edu/ml/datasets/concrete+compressive+strength
+
+
+
+**Dataset**: heart.csv
+**Description**: Predict presence of heart disease from health features.
+**Variables**: `Age` , `Sex`, `ChestPainType`, `RestingBP`, `Cholesterol`, `FastingBS`, `RestingECG`, `MaxHR`, `ExceriseAngina`, `Oldpeak`, `ST_Slope`, `HeartDisease`
+
+**Source**: https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction
+
