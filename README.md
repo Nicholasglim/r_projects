@@ -1,5 +1,6 @@
 List of datasets along with descriptions
 ---
+* Unsupervised
 
 **Dataset**: abalone.csv 
 **Description**: Predict the age of abalone from physical measurements.
@@ -9,7 +10,7 @@ List of datasets along with descriptions
 
 **Original source**: https://archive.ics.uci.edu/dataset/1/abalone
 
-Regression
+* Regression
 
 **Dataset**: Concrete Compressive Strength.csv
 **Description**: Predict concrete compressive strength from varying concrete mixtures
@@ -19,7 +20,7 @@ Regression
 
 **Original source**: https://archive.ics.uci.edu/ml/datasets/concrete+compressive+strength
 
-Classification
+* Classification
 
 **Dataset**: heart.csv
 **Description**: Predict presence of heart disease from health indicators
