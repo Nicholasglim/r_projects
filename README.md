@@ -1,5 +1,6 @@
 List of datasets along with descriptions
 ---
+
 **Dataset**: abalone.csv 
 **Description**: Predict the age of abalone from physical measurements.
 **Variables**: `Sex` , `Length`, `Diameter`, `Height`, `Whole weight`, `Shucked weight`, `Viscera weight`, `Shell weight`, `Rings`
@@ -7,6 +8,8 @@ List of datasets along with descriptions
 **Source**: https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset
 
 **Original source**: https://archive.ics.uci.edu/dataset/1/abalone
+
+Regression
 
 **Dataset**: Concrete Compressive Strength.csv
 **Description**: Predict concrete compressive strength from varying concrete mixtures
@@ -16,7 +19,7 @@ List of datasets along with descriptions
 
 **Original source**: https://archive.ics.uci.edu/ml/datasets/concrete+compressive+strength
 
-
+Classification
 
 **Dataset**: heart.csv
 **Description**: Predict presence of heart disease from health indicators
