@@ -5,7 +5,7 @@ library(ggplot2)
 library(ggfortify)
 
 # URL: https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset
-abalone_df <- read.csv("C:/Users/nicho/Desktop/abalone.csv")
+abalone_df <- read.csv("https://raw.githubusercontent.com/Nicholasglim/r_project/main/datasets/abalone.csv")
 
 summary(abalone_df)
 
