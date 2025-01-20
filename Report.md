@@ -10,24 +10,6 @@
 
 ---
 
-## 2. Regression: Concrete Compressive Strength Prediction
-
-**Problem Description:** This showcase uses regression techniques to predict concrete compressive strength based on various components in the concrete mixture, such as cement, water, slag, and aggregates, as well as the age of the concrete.
-
-**Introduction:** Concrete is a fundamental material in construction, essential in buildings, bridges, and even historical landmarks. The dataset consists of the dependent variable: concrete compressive strength, and eight independent variables: cement, blast furnace slag, fly ash, water, superplasticizer, coarse aggregate, fine aggregate, and age. Compressive strength of concrete is a non-linear function of both the age and the constituent ingredients. During hydration, the mixture reacts with water, gaining strength rapidly at first, then gradually over time.
-
-**Impact:** By using machine learning, the formulation of concrete can be optimized with data and statistics to enhance strength and durability, reduce costs, minimize environmental impact, and improve construction practices beyond traditional testing methods.
-
----
-
-## 3. Classification: Heart Disease Prediction
-
-**Problem Description:** This showcase uses classification methods to predict the likelihood of heart disease based on various health indicators, such as age, cholesterol levels, blood pressure, and other key factors
-
-**Introduction:** Cardiovascular disease is the leading cause of death globally, with nearly one-third of all deaths attributed to it. The dataset includes 11 independent variables: age, sex, chest pain type, resting blood pressure, cholesterol, fasting blood sugar, resting ECG, max heart rate, exercise angina, old peak, and ST slope, with the dependent variable being the presence or absence of heart disease.
-
-**Impact:** Through machine learning algorithms, early detection of heart disease can be streamlined, helping doctors and healthcare professionals identify at-risk patients and take timely preventive or remedial action. This could enhance healthcare outcomes and reduce the overall burden of cardiovascular disease.
-
 ### Principal Component Analysis (PCA)
 The dataset used is Abalone dataset which seeks to identify the age of abalones by the number of rings using physical measurements. With a mean correlation of 0.9, the abalone dataset is suitable to use PCA for unsupervised learning.
 <img src="https://github.com/user-attachments/assets/bcaa735a-601f-432b-b610-68593b1573af" alt="image" width="1000"/>
@@ -96,17 +78,15 @@ Cluster 1 (red) has a moderate number of outliers, primarily along the y-axis, i
 *******************************************************************************************************************************************************************
 # Supervised Learning
 
-## Regression
-Dataset: https://www.kaggle.com/datasets/niteshyadav3103/concrete-compressive-strength
+## 2. Regression: Concrete Compressive Strength Prediction
 
-### Introduction
-Concrete is a ubiquitous building material and a cornerstone of construction for millennia. From foundational structures to towering skyscrapers, bridges and even the Colosseum of ancient Rome. Concrete’s versatility and reliability has been an indispensable component of construction, facilitating the advancement of civilisations.
+**Problem Description:** This showcase uses regression techniques to predict concrete compressive strength based on various components in the concrete mixture, such as cement, water, slag, and aggregates, as well as the age of the concrete.
 
-The dataset consists of the Dependent Variable of concrete compressive strength and 8 Independent Variables of cement, blast furnace slag, fly ash, water, superplasticizer, coarse and fine aggregate, and age.
+**Introduction:** Concrete is a fundamental material in construction, essential in buildings, bridges, and even historical landmarks. The dataset consists of the dependent variable: concrete compressive strength, and eight independent variables: cement, blast furnace slag, fly ash, water, superplasticizer, coarse aggregate, fine aggregate, and age. Compressive strength of concrete is a non-linear function of both the age and the constituent ingredients. During hydration, the mixture reacts with water, gaining strength rapidly at first, then gradually over time.
 
-Compressive strength of concrete is expressed in a non-linear function of age and constituent ingredients. Through the process of hydration, the mixture of materials reacts with water to rapidly gain strength at the initial stage. As the curing process continues, strength increases at a gradual rate and slows down overtime. 
+**Impact:** By using machine learning, the formulation of concrete can be optimized with data-driven insights, enhancing strength and durability, and overall performance. This approach not only reduces costs and minimizes environmental impact but also improves construction practices, going beyond traditional testing methods like destructive and non-destructive testing to provide more efficient and sustainable solutions.
 
-Through the use of Machine Learning algorithms, the formulation of concrete can be improved and optimised further with data and statistics, other than using current destructive and non-destructive tests. Different formulation of material and proportion can be assessed, which can minimise costs and environmental impacts. 
+---
 
 ### Visualisations
 #### Pearson Correlation
@@ -199,15 +179,13 @@ A random forest analysis is used on the trainset of the concrete compressive str
 
 As shown in fig.18, the Root Mean Square Error (RMSE) of the trainset and testset for linear regression are the largest, RMSE for random forest are the lowest and RMSE for CART lies in the middle of the two other models. Thus, random forest is the best model to use as it possesses the lowest error.
 
-## Classification
-Dataset: https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction
+## 3. Classification: Heart Disease Prediction
 
-### Introduction
-Cardiovascular disease is the leading cause of death, accounting for nearly 1/3 of all deaths worldwide. A further 1/3 of cardiovascular deaths occur in people under 70 years old. Lifestyle factors such as an abundance of unhealthy food and general lack of exercise has contributed significantly to the development of cardiovascular disease. 
+**Problem Description:** This showcase uses classification methods to predict the likelihood of heart disease based on various health indicators, such as age, cholesterol levels, blood pressure, and other key factors
 
-The dataset consists of the Dependent Variable of heart disease and 11 Independent Variables of age, sex, chest pain type, resting blood pressure, cholesterol, fasting blood sugar, resting electrocardiogram, max heart rate, exercise angina, old peak and ST slope.
+**Introduction:** Cardiovascular disease is the leading cause of death globally, with nearly 1/3 of all deaths attributed to it. The dataset includes 11 independent variables: age, sex, chest pain type, resting blood pressure, cholesterol, fasting blood sugar, resting ECG, max heart rate, exercise angina, old peak, and ST slope, with the dependent variable being the presence or absence of heart disease.
 
-Through the use of Machine Learning algorithms, procedures for early detection of cardiovascular disease for doctors and nurses will be streamlined and remedial action can be taken.
+**Impact:** Through machine learning algorithms, early detection of heart disease can be streamlined, helping doctors and healthcare professionals identify at-risk patients and take timely preventive or remedial action. This could enhance healthcare outcomes and reduce the overall burden of cardiovascular disease.
 
 ### Logistic Regression
 ![image](https://github.com/user-attachments/assets/256a3083-ba5d-4411-ba86-81e6c37ad727)
