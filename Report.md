@@ -1,22 +1,32 @@
-# This project showcases both Unsupervised & Supervised Machine Learning techniques, including Regression & Classification.
+# This project showcases both **Unsupervised** & **Supervised** Machine Learning techniques, including Regression & Classification.
 
-The first showcase uses Unsupervised Machine Learning techniques to determinine the age of abalones by counting the number of rings, similar to how tree rings indicate age. Each ring typically represents one year. However, due to the smaller size of abalone rings, they must be stained with dye to make them visible under a microscope. However, further information such as weather patterns and location may be needed to obtain more accurate results
+## 1. Unsupervised Learning: Abalone Age Prediction
 
-The second showcase uses regression techniques to evaluate concrete compressive strength under various combinations of concrete mixtures.
+**Problem Description:** This showcase uses unsupervised machine learning to estimate the age of abalones by counting shell rings, similar to tree rings. Each ring typically represents one year of growth, but additional environmental data could further refine predictions.
 
-The third showcase uses classification methods to detect the presence of heart disease, using 11 indicators.
+**Introduction:** Abalones are marine mollusks valued for their meat and iridescent shells, and they contribute to ocean ecosystems by improving water quality through filter feeding. The dataset consists of eight independent variables: sex, length, diameter, height, whole weight, shucked weight, viscera weight, and shell weight, with the dependent variable being the number of rings (age).
+
+**Impact:** Machine learning, helps regulate sustainable harvesting, supporting conservation efforts and preventing overexploitation, similar to practices in lobster fishing where size and weight are used to determine harvest eligibility.
 
 ---
-List of datasets along with description
+
+## 2. Regression: Concrete Compressive Strength Prediction
+
+**Problem Description:** This showcase uses regression techniques to predict concrete compressive strength based on various components in the concrete mixture, such as cement, water, slag, and aggregates, as well as the age of the concrete.
+
+**Introduction:** Concrete is a fundamental material in construction, essential in buildings, bridges, and even historical landmarks. The dataset consists of the dependent variable: concrete compressive strength, and eight independent variables: cement, blast furnace slag, fly ash, water, superplasticizer, coarse aggregate, fine aggregate, and age. Compressive strength of concrete is a non-linear function of both the age and the constituent ingredients. During hydration, the mixture reacts with water, gaining strength rapidly at first, then gradually over time.
+
+**Impact:** By using machine learning, the formulation of concrete can be optimized with data and statistics to enhance strength and durability, reduce costs, minimize environmental impact, and improve construction practices beyond traditional testing methods.
+
 ---
-Dataset: https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset
 
-### Introduction
-Abalone is a type of marine mollusk that are prized for their meat and iridescent shells in many cultures. Additionally, as a marine mollusk, abalones play a vital role of cleaning the ocean and improving water quality through the process of filter feeding.
+## 3. Classification: Heart Disease Prediction
 
-The dataset consists of the Dependent Variable of number of rings (indicating age) and 8 Independent Variables of sex, length, diameter, height, whole weight, shucked weight, viscera weight and shell weight.
+**Problem Description:** This showcase uses classification methods to predict the likelihood of heart disease based on various health indicators, such as age, cholesterol levels, blood pressure, and other key factors
 
-Through the analysis of machine learning, a regulation about abalone harvesting can be backed up by statistics and data to ensure the sustainability of abalone and prevent overexploitation. Similarly to lobster fishing, the dimensions and weight is used to assess suitability of harvest.
+**Introduction:** Cardiovascular disease is the leading cause of death globally, with nearly one-third of all deaths attributed to it. The dataset includes 11 independent variables: age, sex, chest pain type, resting blood pressure, cholesterol, fasting blood sugar, resting ECG, max heart rate, exercise angina, old peak, and ST slope, with the dependent variable being the presence or absence of heart disease.
+
+**Impact:** Through machine learning algorithms, early detection of heart disease can be streamlined, helping doctors and healthcare professionals identify at-risk patients and take timely preventive or remedial action. This could enhance healthcare outcomes and reduce the overall burden of cardiovascular disease.
 
 ### Principal Component Analysis (PCA)
 The dataset used is Abalone dataset which seeks to identify the age of abalones by the number of rings using physical measurements. With a mean correlation of 0.9, the abalone dataset is suitable to use PCA for unsupervised learning.
