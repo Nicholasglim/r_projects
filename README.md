@@ -2,7 +2,7 @@ List of datasets along with descriptions
 ---
 ## 1. Unsupervised Learning
 
-### Dataset: abalone.csv 
+### Dataset: Abalone (`abalone.csv`)  
 **Description**: This dataset is used to predict the age of abalone from physical measurements. The age is determined as Rings + 1.5 (years)
 **Variables**: 
 - `Sex`: Categorical (M = Male, F = Female, I = Infant)  
