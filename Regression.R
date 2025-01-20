@@ -9,7 +9,7 @@ library(rpart)
 library(rpart.plot)
 
 # URL: https://www.kaggle.com/datasets/niteshyadav3103/concrete-compressive-strength
-concrete_df <- read.csv("https://raw.githubusercontent.com/Nicholasglim/r_project/main/datasets/Concrete_Data.csv", stringsAsFactors = TRUE)
+heart_df <- read.csv("https://raw.githubusercontent.com/Nicholasglim/r_project/main/datasets/heart.csv", stringsAsFactors = TRUE)
 
 str(concrete_df)
 
