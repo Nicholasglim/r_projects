@@ -103,11 +103,6 @@ WSS Plot
 
 According to the WSS plot, there is a diminishing return after cluster 3. Therefore, the optimal number of clusters is 3.
 
-Cluster plot
-![image](https://github.com/user-attachments/assets/761532a4-5f9b-4358-b410-5e33a3973e3b)
-
-Analysing the 3 clusters, we can observe that cluster 1 (Red)'s mean ranges around 0. Cluster 2 ranges around 1 and cluster 3 ranges around -1. From this information, we can identify that the clusters are well segregated.
-
 ```
 # K-means cluster
 KM <- kmeans(abalone_scale, centers = 3, nstart = 100)
@@ -122,6 +117,9 @@ Cluster 1: 1,764
 Cluster 2: 1,194 
 Cluster 3: 1,219
 ```
+Between-Cluster Sum of Squares / Total Sum of Squares (BSS / TSS) Ratio:
+
+The ratio of 76.0% means that 76% of the total variance in the data is explained by the clustering, which indicates a reasonably good separation between clusters.
 #### Within-Cluster Sum of Squares (WSS):
 ```
 Cluster 1: 1,920.078
@@ -129,21 +127,17 @@ Cluster 2: 3,311.914
 Cluster 3: 1,790.464
 ```
 WSS shows the internal variability of each cluster, with cluster 2 having more variability than the other two clusters.
+
 ```
 # Cluster plot
 KM_cluster <- KM$cluster
 rownames(abalone_scale) <- paste(abalone_df$Rings, 1:dim(abalone)[1], sep = "_")
 autoplot(KM, abalone, frame = TRUE)
 ```
+Cluster plot
+![image](https://github.com/user-attachments/assets/761532a4-5f9b-4358-b410-5e33a3973e3b)
 
-
-
-
-#### Between-Cluster Sum of Squares / Total Sum of Squares (BSS / TSS) Ratio:
-
-The ratio of 76.0% means that 76% of the total variance in the data is explained by the clustering, which indicates a reasonably good separation between clusters.
-
-In Figure 6, the visualizations of clusters 1, 2, and 3 show that the distribution of data points is more spread along the x-axis (PC1, accounting for 97.41% of the variance) than the y-axis (PC2, representing 1.14% of the variance).
+Analysing the 3 clusters, we can observe that cluster 1 (Red)'s mean ranges around 0. Cluster 2 ranges around 1 and cluster 3 ranges around -1. From this information, we can identify that the clusters are well segregated.
 
 Cluster 1 (red) has a moderate number of outliers, primarily along the y-axis, indicating some variability in PC2. Cluster 2 (green) has a large number of data points with a wider spread in both PC1 and PC2, showing more pronounced outliers compared to the other clusters. Cluster 3 (blue) has the fewest outliers, though its outliers appear more extreme in distance from the cluster's main concentration, particularly along the y-axis. Overall, Cluster 3 appears more compact, while Cluster 2 shows the greatest spread and variability.
 
