@@ -111,22 +111,23 @@ print(KM)
 K-Means Clustering analysis
 ![image](https://github.com/user-attachments/assets/8b68e1e0-d1f8-42dd-ad92-b3f073ec547d)
 
-#### Cluster sizes: 
+### Cluster sizes: 
 ```
 Cluster 1: 1,764 
 Cluster 2: 1,194 
 Cluster 3: 1,219
 ```
-Between-Cluster Sum of Squares / Total Sum of Squares (BSS / TSS) Ratio:
-
-The ratio of 76.0% means that 76% of the total variance in the data is explained by the clustering, which indicates a reasonably good separation between clusters.
-#### Within-Cluster Sum of Squares (WSS):
+### Within-Cluster Sum of Squares (WSS):
 ```
 Cluster 1: 1,920.078
 Cluster 2: 3,311.914
 Cluster 3: 1,790.464
 ```
 WSS shows the internal variability of each cluster, with cluster 2 having more variability than the other two clusters.
+
+### Between-Cluster Sum of Squares / Total Sum of Squares (BSS / TSS) Ratio:
+
+The ratio of 76.0% means that 76% of the total variance in the data is explained by the clustering, which indicates a reasonably good separation between clusters.
 
 ```
 # Cluster plot
