@@ -240,7 +240,7 @@ Root Mean Squared Error (RMSE)
 
 Evaluation: A higher RMSE in the test set compared to the training set suggests potential overfitting, as the model performs better on the training data than on unseen data. However, if the difference is small, it may still indicate reasonable generalization ability.
 
-# Subset Selection: Identifying the Best Method for Prediction based on Statistical Significance (p-value)
+# Subset Selection: Identifying the Best Method for Prediction, based on Statistical Significance (p-value)
 ## Forward Selection Method
 ```
 # Forward Selection on trainset
@@ -313,7 +313,7 @@ BSS_rmse_test <- sqrt(mean((testset$Concrete.CS - BSS_testset_predictions)^2))
 
 Evaluation: After using these 3 subset selection methods, all 3 have very similar predictive performance. None had a significant advantage in preictive accuracy.
 
-# Comparing Model Selection Methods based on Akaike Information Criterion (AIC)
+# Comparing Model Selection Methods, based on Akaike Information Criterion (AIC)
 ```
 fit_all <- lm(Concrete.CS ~ ., data = concrete_df)
 
@@ -344,76 +344,124 @@ step(fit_start, direction = "both", scope = formula(fit_all))
 ![Step-wise AIC part 3](https://github.com/user-attachments/assets/6758ede2-6952-4587-a8dc-a1707805594e)
 ![Step-wise AIC part 4](https://github.com/user-attachments/assets/4c0b6e7f-3023-4fca-b1e9-529e1aaeaffd)
 
+| Method                | AIC     |
+|-----------------------|---------|
+| Forward Selection     | 4832.91 |
+| Backwards Elimination | 4832.91 |
+| Stepwise Regression   | 5801.45 |
 
+Evaluation: Forward Selection and Backwards Elimination produced the same AIC (4832.91), indicating they selected the same set of variables. While Stepwise Regression has a higher AIC (5801.45), suggesting overfitting due to unnecessary complexity. This could be due to multicollinearity or the inclusion of less significant predictors.
 
-### Forward Selection & Backward Elimination
-<div style="display: flex; gap: 10px;">
-  <img src="https://github.com/user-attachments/assets/db67c097-3e9d-49dd-ae3f-c32468d78f9b" alt="image1" width="500"/>
-  <img src="https://github.com/user-attachments/assets/2255c5c2-fa75-4fbb-af81-6bd80d6d8c66" alt="image2" width="500"/>
-</div>
+# Classification And Regression Tree (CART)
+## Building & Optimizing CART Tree
+```
+# Determining Cross-Validation (CV) Error Cap
+model1 <- rpart(Concrete.CS ~ ., data = trainset, method = 'anova', cp = 0)
 
-**Fig.10 Trainset analysis of Forward Selection (left) & Backwards Elimination (right)**
+# Print Complexity Parameter (CP) Table
+CP_table <- printcp(model1)
+```
+![CP Table part 1](https://github.com/user-attachments/assets/b0d241da-69ea-4390-b9f1-4069a186aa88)
+![CP Table part 2](https://github.com/user-attachments/assets/b4d4af98-4ae9-44d9-94b3-9971b4bf266c)
+![CP Table part 3](https://github.com/user-attachments/assets/f1f7c973-ad54-48e4-b32c-f065104192ae)
 
-### Stepwise Regression
-  ![image](https://github.com/user-attachments/assets/78763cf4-0f32-4dfc-9ee2-f264fdcbe67d)
-  
-**Fig.11 Stepwise regression Trainset analysis**
+```
+# Selecting the last row index
+last_row <- nrow(model1$cptable)
 
-We note that the forward selection and backwards elimination methods produced identical values (R, R-Squared, RMSE, etc.) While the stepwise regression method’s values had very slight differences with the other 2 methods.
+# Computing the cross-validation error cap
+CV_error_cap <- model1$cptable[last_row, "xerror"] + model1$cptable[last_row, "xstd"]
+```
+CV Error Cap: 0.205117709852608
 
-Using RMSE values for comparison, the model's evaluation across the three training sets yielded identical results of 10.01351 for all variable selection methods: Forward, Backward, and Stepwise.
+```
+# Finding the optimal Complexity Parameter (CP)
+i <- 1
+while (i < last_row && model1$cptable[i, "xerror"] > cv_error_cap) {
+  i <- i + 1
+}
 
-### Model Selection
-![image](https://github.com/user-attachments/assets/ef5d1d53-b292-4063-91ec-f57a51ea21db)
+plotcp(model1)
+```
+CP Plot
 
-**Fig.12 Forward Model Selection**
+![CP Plot](https://github.com/user-attachments/assets/b14d2706-2eff-47bb-adb7-aa78d4b53946)
+i = 35
 
-In figure 12, the Akaike Information Criterion (AIC) of forward model selection is 4832.91 with all the independent variables used. 
+```
+# Finding Optimal CP
+cp_opt <- ifelse(i > 1, sqrt(model1$cptable[i, "CP"] * model1$cptable[i - 1, "CP"]), 1)
+```
 
-Similarly, in the backwards elimination and best subset analysis, did not remove any independent variables but instead retained all variables. It is noted that all 3 methods produced the same AIC and performed very similarly.
+Optimal CP: 0.002079368441975
 
-### Classification And Regression Tree (CART)
+```
+# Pruning CART Model
+cart_model_1SE <- prune(model1, cp = cp_opt)
 
-#### Maximal Tree
+# Print CP Table
+printcp(cart_model_1SE)
+```
+![CART model part 1](https://github.com/user-attachments/assets/8b6f442b-1f36-4d64-8c48-537ca9f8092c)
+![CART model part w](https://github.com/user-attachments/assets/b6806c72-f6fa-46ff-acf7-3c7569e00a20)
 
-![image](https://github.com/user-attachments/assets/40dc1079-4443-406c-adcc-9812e77a3856)
+```
+# Plot Pruned CP Plot
+plotcp(cart_model_1SE)
+```
+![image](https://github.com/user-attachments/assets/8ad1b9dc-252d-4e08-931b-9d34f6a26c9f)
 
-**Fig. 13 CART Maximal Tree with 57 decision nodes**
+```
+# Visualizing Pruned Decision Tree
+model <- c(model, "CART 1SE")
+rpart.plot(cart_model_1SE, nn = T, main = "Optimal Tree", cex = 0.4, tweak = 0.95, lwd = 3, faclen = 0)
+```
+![image](https://github.com/user-attachments/assets/1f45af7b-c88a-41b6-9296-61620b1f86f0)
 
-#### CP (Complexity Parameter) Plot
-![image](https://github.com/user-attachments/assets/3d1f483d-c218-45a1-8742-2375c8683252)
+```
+RMSE_train <- c(RMSE_train, round(sqrt(mean((trainset$Concrete.CS - predict(cart_model_1SE))^2))))
+RMSE_test <- c(RMSE_test, round(sqrt(mean((testset$Concrete.CS - predict(cart_model_1SE, newdata = testset))^2))))
+```
 
-**Fig. 14 CP plot of maximal tree**
+# Random Forest
+```
+# Training the Random Forest Model
+RF_model <- randomForest(Concrete.CS ~ . , data=trainset)
 
-<div style="display: flex; gap: 10px;">
-  <img src="https://github.com/user-attachments/assets/bf096b60-95af-40fb-a761-66d0bc11887a" alt="image1" width="750"/>
-  <img src="https://github.com/user-attachments/assets/3cf205c6-c8b2-4e03-b16e-53a51b71a5bd" alt="image2" width="250"/>
-</div>
+# Display Model Summary
+RF_model
+```
+![image](https://github.com/user-attachments/assets/e1cb26b3-ff35-4a2c-89c7-9c84649855f1)
 
-**Fig. 15 Optimal CART 1SE model via CP plot (left) and corresponding values (right)**
+A Random Forest analysis was performed on the training set of the Concrete Compressive Strength dataset using 500 trees. The model resulted in a mean squared residual of 32.5234 and explained 88.17% of the variance.
 
-![image](https://github.com/user-attachments/assets/feba2c39-f9f0-4313-8591-d748dd1ed852)
-![image](https://github.com/user-attachments/assets/e0f1434a-1b44-4f61-aed5-b29ce817b6d7)
+```
+# Computing Out-Of-Bag (OOB) RMSE
+sqrt(RF_model$mse[RF_model$ntree])
+```
+OOB RMSE is an estimate of the model’s predictive error, computed from the bootstrap sampling used in Random Forest.
 
-**Fig. 16 Optimal tree**
+```
+plot(RF_model)
+```
+![image](https://github.com/user-attachments/assets/4aff08ea-4317-45dd-b57d-13bacd352d04)
 
-Using the optimal CP of 0.002225818664705837, the variables used in the optimal CART trees were all the independent variables except for the variable, fly ash. In the optimal tree, more than over half were pruned with 33 nodes. With a xerror and xstd of 0.22101 and 0.015606 respectively, the 1SE (Standard Error) is 0.236616.
+Error stablised before 500 trees.
 
-### Random Forest
+```
+model <- c(model, "Random Forest")
 
-A random forest analysis is used on the trainset of the concrete compressive strength dataset, with 500 trees. Resulting in a mean of squared residuals of 32.19245 and explaining 88.29% of the variance.
+RMSE_train <- c(RMSE_train, round(sqrt(mean((trainset$Concrete.CS - predict(RF_model, newdata = trainset))^2))))
+RMSE_test <- c(RMSE_test, round(sqrt(mean((testset$Concrete.CS - predict(RF_model, newdata = testset))^2))))
 
-![image](https://github.com/user-attachments/assets/2730cffc-017d-4103-9a8e-703fb243fb70)
+results <- data.frame(model, RMSE_train, RMSE_test)
+View(results)
+```
+![image](https://github.com/user-attachments/assets/70c758dd-1e3c-489a-81e8-179293723702)
 
-**Fig.17 OOB error graph**
+Random Forest has lowest testset error.
 
-### Results
-
-![image](https://github.com/user-attachments/assets/11e53160-185f-45e8-98c4-c2467de0ac23)
-
-**Fig.18 RMSE for LR, CART & RF**
-
-As shown in fig.18, the Root Mean Square Error (RMSE) of the trainset and testset for linear regression are the largest, RMSE for random forest are the lowest and RMSE for CART lies in the middle of the two other models. Thus, random forest is the best model to use as it possesses the lowest error.
+The Root Mean Square Error (RMSE) for both the training and test sets is highest for Linear Regression. CART 1SE has a lower RMSE than Linear Regression but higher than Random Forest. Random Forest achieves the lowest RMSE among the three models, indicating the best predictive performance. Therefore, Random Forest is the most suitable model as it produces the lowest error.
 
 ## 3. Classification: Heart Disease Prediction
 
