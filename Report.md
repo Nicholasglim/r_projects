@@ -234,12 +234,13 @@ RMSE_test <- round(sqrt(mean((testset$Concrete.CS - predict(model_train, newdata
 ```
 Root Mean Squared Error (RMSE)
 
-RMSE for Trainset: 10
-
-RMSE for Testset: 11
+| Model Version | Train RMSE | Test RMSE |
+|---------------|------------|-----------|
+| Initial Model | 10         | 11        |
 
 Evaluation: A higher RMSE in the test set compared to the training set suggests potential overfitting, as the model performs better on the training data than on unseen data. However, if the difference is small, it may still indicate reasonable generalization ability.
 
+# Subset Selection: Identifying the Best Method for Prediction
 ## Forward Selection Method
 ```
 # Forward Selection on trainset
@@ -258,18 +259,68 @@ FWD_testset_predictions <- predict(model_train, newdata = testset)
 # Evaluation of testset
 FWD_rmse_test <- sqrt(mean((testset$Concrete.CS - FWD_testset_predictions)^2))
 ```
-RMSE of Testset: 11
+| Model Version           | Train RMSE | Test RMSE |
+|-------------------------|------------|-----------|
+| Initial Model           | 10         | 11        |
+| After Forward Selection | 10         | 10.0135   |
 
-RMSE of Testset after applying forward selection: 10:0135
-
-Evaluation: The test RMSE reduced from 11 to 10.0135, indicating improved generalization by eliminating unnecessary features. Additionally, the new test RMSE is much closer to the training RMSE, suggesting a more balanced model with reduced overfitting. Overall, forward selection enhanced model performance by improving accuracy on the test set while maintaining a good fit on the training data, making the model more robust and generalizable.
+Evaluation: After Forward Selection, the test RMSE reduced from 11 to 10.0135, indicating improved generalization by eliminating unnecessary features. Additionally, the new test RMSE is much closer to the training RMSE, suggesting a more balanced model with reduced overfitting. Overall, forward selection enhanced model performance by improving accuracy on the test set while maintaining a good fit on the training data, making the model more robust and generalizable.
 
 ## Backwards Elimination Method
 ```
 # Backward Elimination on trainset
 BWDfit_p_train <- ols_step_backward_p(model_train, details = TRUE)
 ```
-![image](https://github.com/user-attachments/assets/6dc9766c-f4bf-4d49-b7bd-d23b2cdfea92)
+![Backwards Elimination](https://github.com/user-attachments/assets/6dc9766c-f4bf-4d49-b7bd-d23b2cdfea92)
+
+```
+# Prediction on backward elimination testset
+BWD_testset_predictions <- predict(model_train, newdata = testset)
+
+# Evaluation of backward testset
+BWD_rmse_test <- sqrt(mean((testset$Concrete.CS - BWD_testset_predictions)^2))
+```
+
+| Model Version               | Train RMSE | Test RMSE |
+|-----------------------------|------------|-----------|
+| Initial Model               | 10         | 11        |
+| After Forward Selection     | 10         | 10.0135   |
+| After Backwards Elimination | 10         | 10.0135   |
+
+Evaluation: Both subset selection methods performed equally well in terms of Test RMSE.
+
+## Best Subset Method
+```
+BSS_p_train <- ols_step_both_p(model_train, details = TRUE)
+```
+![Best Subset part 1](https://github.com/user-attachments/assets/20109a0e-a9a9-464c-ae2d-4b3ea122ed4b)
+![Best Subset part 2](https://github.com/user-attachments/assets/70fbba18-bf45-4c04-9614-2a85ac74165d)
+
+```
+# Prediction on best subset testset
+BSS_testset_predictions <- predict(model_train, newdata = testset)
+
+# Evaluation of best subset testset
+BSS_rmse_test <- sqrt(mean((testset$Concrete.CS - BSS_testset_predictions)^2))
+```
+
+| Model Version               | Train RMSE | Test RMSE |
+|-----------------------------|------------|-----------|
+| Initial Model               | 10         | 11        |
+| After Forward Selection     | 10         | 10.0135   |
+| After Backwards Elimination | 10         | 10.0135   |
+| After Best Subset           | 10         | 10.0135   |
+
+Evaluation: After using these 3 subset selection methods, all 3 have very similar predictive performance. None had a significant advantage in preictive accuracy.
+
+ADD HERE
+```
+fit_all <- lm(Concrete.CS ~ ., data = concrete_df)
+
+fit_start <- lm(Concrete.CS ~ 1, data = concrete_df)
+summary(fit_start)
+```
+![image](https://github.com/user-attachments/assets/c9b15add-7889-4d0d-895f-c5d285aa2734)
 
 ### Forward Selection & Backward Elimination
 <div style="display: flex; gap: 10px;">
