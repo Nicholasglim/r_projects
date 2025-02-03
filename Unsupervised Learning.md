@@ -1,6 +1,6 @@
-# This project showcases both **Unsupervised** & **Supervised** Machine Learning techniques, including Regression & Classification.
+# Unsupervised Learning 
 
-## 1. Unsupervised Learning: Abalone Age Prediction
+## Abalone Age Prediction
 
 **Problem Description:** This showcase uses unsupervised machine learning to estimate the age of abalones by counting shell rings, similar to tree rings. Each ring typically represents one year of growth, but additional environmental data could further refine predictions.
 
