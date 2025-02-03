@@ -240,7 +240,7 @@ Root Mean Squared Error (RMSE)
 
 Evaluation: A higher RMSE in the test set compared to the training set suggests potential overfitting, as the model performs better on the training data than on unseen data. However, if the difference is small, it may still indicate reasonable generalization ability.
 
-# Subset Selection: Identifying the Best Method for Prediction
+# Subset Selection: Identifying the Best Method for Prediction based on Statistical Significance (p-value)
 ## Forward Selection Method
 ```
 # Forward Selection on trainset
@@ -313,7 +313,7 @@ BSS_rmse_test <- sqrt(mean((testset$Concrete.CS - BSS_testset_predictions)^2))
 
 Evaluation: After using these 3 subset selection methods, all 3 have very similar predictive performance. None had a significant advantage in preictive accuracy.
 
-ADD HERE
+# Comparing Model Selection Methods based on Akaike Information Criterion (AIC)
 ```
 fit_all <- lm(Concrete.CS ~ ., data = concrete_df)
 
@@ -321,6 +321,30 @@ fit_start <- lm(Concrete.CS ~ 1, data = concrete_df)
 summary(fit_start)
 ```
 ![image](https://github.com/user-attachments/assets/c9b15add-7889-4d0d-895f-c5d285aa2734)
+
+```
+# Forward Selection Method
+step(fit_all, direction = "forward")
+```
+
+![Forward Selection AIC](https://github.com/user-attachments/assets/67e4370b-eaaa-42ad-ace1-7aff4f485db4)
+
+```
+# Backwards Elimination Method
+step(fit_all, direction = "backward")
+```
+![Backwards Elimination AIC](https://github.com/user-attachments/assets/8290fd0a-d5a1-46fa-8ec7-8cf3e8556a18)
+
+```
+# Step-wise Regression Method
+step(fit_start, direction = "both", scope = formula(fit_all))
+```
+![Step-wise AIC part 1](https://github.com/user-attachments/assets/a02a67df-9c29-4ffc-bb82-55f7bbed014f)
+![Step-wise AIC part 2](https://github.com/user-attachments/assets/04acbf94-afff-4db8-996b-c6ab53e2c3ac)
+![Step-wise AIC part 3](https://github.com/user-attachments/assets/6758ede2-6952-4587-a8dc-a1707805594e)
+![Step-wise AIC part 4](https://github.com/user-attachments/assets/4c0b6e7f-3023-4fca-b1e9-529e1aaeaffd)
+
+
 
 ### Forward Selection & Backward Elimination
 <div style="display: flex; gap: 10px;">
