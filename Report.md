@@ -22,6 +22,7 @@ abalone <- select(abalone_df, c(2,3,4,5,6,7,8))
 cor(abalone)
 ```
 Correlation Matrix
+
 ![Correlation matrix](https://github.com/user-attachments/assets/05e783c8-630e-40bb-a11a-eafca41576a7)
 ```
 # Finding mean correlation
@@ -36,7 +37,7 @@ PCA <- princomp(abalone)
 
 names(PCA)
 ```
-7 loadings have been found
+7 loadings have been identified:
 
 "sdev"     "loadings" "center"   "scale"    "n.obs"    "scores"   "call"  
 ```
@@ -64,6 +65,8 @@ All Correlations are close to zero, meainng the 7 PCs are uncorrelated to each o
 # Scree plot
 fviz_eig(PCA, addlabels = TRUE)
 ```
+Scree Plot
+
 ![Scree Plot](https://github.com/user-attachments/assets/6ea1dd54-530e-45a7-b3c9-8be3110d70a3)
 
 Figure 2 show that component 1 explains the majority of the variance in the dataset, 97.41%, with component 2 explaining 1.14% of the variance.
@@ -74,6 +77,7 @@ Figure 2 show that component 1 explains the majority of the variance in the data
 fviz_pca_biplot(PCA, label = "var", habillage = abalone_df$Rings, col.var = "black")
 ```
 ### PCA loading & Biplot
+
 <div style="display: flex; gap: 10px;">
   <img src="https://github.com/user-attachments/assets/c53d7810-6b2b-42bf-9b7f-d80ebae3747e" alt="image1" width="300"/>
   <img src="https://github.com/user-attachments/assets/8277d02e-ed6f-44b4-b955-9ec3fd2474fc" alt="image2" width="600"/>
@@ -109,6 +113,7 @@ KM <- kmeans(abalone_scale, centers = 3, nstart = 100)
 print(KM)
 ```
 K-Means Clustering analysis
+
 ![image](https://github.com/user-attachments/assets/8b68e1e0-d1f8-42dd-ad92-b3f073ec547d)
 
 ### Cluster sizes: 
@@ -136,6 +141,7 @@ rownames(abalone_scale) <- paste(abalone_df$Rings, 1:dim(abalone)[1], sep = "_")
 autoplot(KM, abalone, frame = TRUE)
 ```
 Cluster plot
+
 ![image](https://github.com/user-attachments/assets/761532a4-5f9b-4358-b410-5e33a3973e3b)
 
 Analysing the 3 clusters, we can observe that cluster 1 (Red)'s mean ranges around 0. Cluster 2 ranges around 1 and cluster 3 ranges around -1. From this information, we can identify that the clusters are well segregated.
@@ -154,28 +160,116 @@ Cluster 1 (red) has a moderate number of outliers, primarily along the y-axis, i
 **Impact:** By using machine learning, the formulation of concrete can be optimized with data-driven insights, enhancing strength and durability, and overall performance. This approach not only reduces costs and minimizes environmental impact but also improves construction practices, going beyond traditional testing methods like destructive and non-destructive testing to provide more efficient and sustainable solutions.
 
 ---
+```
+# Data cleaning (renaming variables)
+concrete_df$Cement <- concrete_df$Cement..component.1..kg.in.a.m.3.mixture.
+concrete_df$Cement..component.1..kg.in.a.m.3.mixture. <- NULL
+concrete_df$BF.Slag <- concrete_df$Blast.Furnace.Slag..component.2..kg.in.a.m.3.mixture.
+concrete_df$Blast.Furnace.Slag..component.2..kg.in.a.m.3.mixture. <- NULL
+concrete_df$Fly.Ash <- concrete_df$Fly.Ash..component.3..kg.in.a.m.3.mixture.
+concrete_df$Fly.Ash..component.3..kg.in.a.m.3.mixture. <- NULL
+concrete_df$Water <- concrete_df$Water...component.4..kg.in.a.m.3.mixture.
+concrete_df$Water...component.4..kg.in.a.m.3.mixture. <- NULL
+concrete_df$Superplasticizer <- concrete_df$Superplasticizer..component.5..kg.in.a.m.3.mixture.
+concrete_df$Superplasticizer..component.5..kg.in.a.m.3.mixture. <- NULL
+concrete_df$Coarse.Agg <- concrete_df$Coarse.Aggregate...component.6..kg.in.a.m.3.mixture.
+concrete_df$Coarse.Aggregate...component.6..kg.in.a.m.3.mixture. <- NULL
+concrete_df$Fine.Agg<- concrete_df$Fine.Aggregate..component.7..kg.in.a.m.3.mixture.
+concrete_df$Fine.Aggregate..component.7..kg.in.a.m.3.mixture. <- NULL
+concrete_df$Age <- concrete_df$Age..day.
+concrete_df$Age..day. <- NULL
+concrete_df$Concrete.CS <- concrete_df$Concrete.compressive.strength.MPa..megapascals..
+concrete_df$Concrete.compressive.strength.MPa..megapascals.. <- NULL
 
-### Visualisations
-#### Pearson Correlation
-![image](https://github.com/user-attachments/assets/d051f6b7-1a33-42c4-a553-3755eac8cf04)
+# Summary of dataset
+summary(concrete_df)
+```
+![Dataset summary](https://github.com/user-attachments/assets/c1563b01-54fa-4782-b8a3-d583a9581ed3)
 
-**Fig.7 Pearson Correlation Plot**
+```
+# Correlation test
+pearson_corr <- cor(concrete_df, method = "pearson")
+pearson_corr
+```
+Correlation Matrix
 
-#### Scatterplot Matrix
-![image](https://github.com/user-attachments/assets/ebb50658-f966-442e-8bdb-e7b12c8b2a61)
+![Correlation Matrix](https://github.com/user-attachments/assets/f3e1d479-5112-4a76-aef1-76b7d8357fc8)
+```
+corrplot(pearson_corr, type = "upper", method = "pie")
+```
+Correlation Plot
 
-**Fig.8 Scatterplot Matrix of concrete strength dataset**
+![Correlation Plot](https://github.com/user-attachments/assets/44a56548-07ac-4b85-992f-33c61efddd14)
+
+```
+# Scatterplot Matrix
+pairs(~ . , panel=panel.smooth, data = concrete_df, main = "Scatterplot Matrix of Concrete Strength data")
+```
+Scatter Plot
+
+![Scatterplot](https://github.com/user-attachments/assets/3e6defbd-4acf-4148-8fbb-84ccb9e9c90f)
 
 ### Linear Regression Method
 Using a Train-Test split of 70:30
-<div style="display: flex; gap: 10px;">
-  <img src="https://github.com/user-attachments/assets/71690310-5a12-4c5d-96b6-64ff2b3d5cea" alt="image1" width="500"/>
-  <img src="https://github.com/user-attachments/assets/e0bcf14c-aa84-448d-b900-327916f77917" alt="image2" width="300"/>
-  </div>
-  
-**Fig.9 Linear Regression Model (left), summary of trainset (right-top) & testset (right-bottom)**
+```
+set.seed(2024)
+# Train-Test set
+train <- sample.split(Y = concrete_df$Concrete.CS, SplitRatio = 0.7)
+trainset <- subset(concrete_df, train==T)
+testset <- subset(concrete_df, train==F)
 
-According to the results of the linear regression model, the adjusted R-squared value is 0.6155, explaining 61.55% of the variance in the dependent variable (CCS) with the independent variables. Along with summary values of the testset with higher median, mean and max but lower min than the trainset.
+summary(trainset$Concrete.CS)
+summary(testset$Concrete.CS)
+```
+Summary of trainset (top) & testset (bottom)
+
+![Summary of Train/Test sets](https://github.com/user-attachments/assets/6b28ddf1-0863-4b27-a0b9-9edd4769186a)
+
+```
+# Fitting linear model to trainset
+model_train <- lm(Concrete.CS ~ ., data = trainset)
+model <- ("Linear Regression")
+RMSE_train <- round(sqrt(mean((trainset$Concrete.CS - predict(model_train))^2)))
+RMSE_test <- round(sqrt(mean((testset$Concrete.CS - predict(model_train, newdata = testset))^2)))
+```
+Root Mean Squared Error (RMSE)
+
+RMSE for Trainset: 10
+
+RMSE for Testset: 11
+
+Evaluation: A higher RMSE in the test set compared to the training set suggests potential overfitting, as the model performs better on the training data than on unseen data. However, if the difference is small, it may still indicate reasonable generalization ability.
+
+## Forward Selection Method
+```
+# Forward Selection on trainset
+FWDfit_p_train <- ols_step_forward_p(model_train, details = TRUE)
+```
+![Forward Selection part 1](https://github.com/user-attachments/assets/2c5731b1-fd4a-4699-a57b-957a2cd82495)
+![Forward Selection part 2](https://github.com/user-attachments/assets/02e94efc-2396-4964-91c9-d9435d370cd0)
+![Forward Selection part 3](https://github.com/user-attachments/assets/282e9068-eea9-4a42-acb1-015dce0a6035)
+![Forward Selection part 4](https://github.com/user-attachments/assets/bc9a01a3-02c7-48ae-b3ab-d35a0fc8f20c)
+![Forward Selection part 5](https://github.com/user-attachments/assets/c3432f6c-4fa4-4d29-a323-1206c8d8120e)
+
+```
+# Prediction on forward selection testset
+FWD_testset_predictions <- predict(model_train, newdata = testset)
+
+# Evaluation of testset
+FWD_rmse_test <- sqrt(mean((testset$Concrete.CS - FWD_testset_predictions)^2))
+```
+RMSE of Testset: 11
+
+RMSE of Testset after applying forward selection: 10:0135
+
+Evaluation: The test RMSE reduced from 11 to 10.0135, indicating improved generalization by eliminating unnecessary features. Additionally, the new test RMSE is much closer to the training RMSE, suggesting a more balanced model with reduced overfitting. Overall, forward selection enhanced model performance by improving accuracy on the test set while maintaining a good fit on the training data, making the model more robust and generalizable.
+
+## Backwards Elimination Method
+```
+# Backward Elimination on trainset
+BWDfit_p_train <- ols_step_backward_p(model_train, details = TRUE)
+```
+![image](https://github.com/user-attachments/assets/6dc9766c-f4bf-4d49-b7bd-d23b2cdfea92)
 
 ### Forward Selection & Backward Elimination
 <div style="display: flex; gap: 10px;">
