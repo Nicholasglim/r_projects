@@ -58,7 +58,7 @@ Scatter Plot
 
 ![Scatterplot](https://github.com/user-attachments/assets/3e6defbd-4acf-4148-8fbb-84ccb9e9c90f)
 
-### Linear Regression Model
+## Linear Regression Model
 Using a Train-Test split of 70:30
 ```
 set.seed(2024)
@@ -89,8 +89,8 @@ Root Mean Squared Error (RMSE)
 
 Evaluation: A higher RMSE in the test set compared to the training set suggests potential overfitting, as the model performs better on the training data than on unseen data. However, if the difference is small, it may still indicate reasonable generalization ability.
 
-# Subset Selection: Identifying the Best Method for Prediction, based on Statistical Significance (p-value)
-## Forward Selection Method
+## Comparing Subset Selection Method for Prediction using RMSE
+### Forward Selection Method
 ```
 # Forward Selection on trainset
 FWDfit_p_train <- ols_step_forward_p(model_train, details = TRUE)
@@ -115,7 +115,7 @@ FWD_rmse_test <- sqrt(mean((testset$Concrete.CS - FWD_testset_predictions)^2))
 
 Evaluation: After Forward Selection, the test RMSE reduced from 11 to 10.0135, indicating improved generalization by eliminating unnecessary features. Additionally, the new test RMSE is much closer to the training RMSE, suggesting a more balanced model with reduced overfitting. Overall, forward selection enhanced model performance by improving accuracy on the test set while maintaining a good fit on the training data, making the model more robust and generalizable.
 
-## Backwards Elimination Method
+### Backwards Elimination Method
 ```
 # Backward Elimination on trainset
 BWDfit_p_train <- ols_step_backward_p(model_train, details = TRUE)
@@ -138,7 +138,7 @@ BWD_rmse_test <- sqrt(mean((testset$Concrete.CS - BWD_testset_predictions)^2))
 
 Evaluation: Both subset selection methods performed equally well in terms of Test RMSE.
 
-## Best Subset Method
+### Best Subset Method
 ```
 BSS_p_train <- ols_step_both_p(model_train, details = TRUE)
 ```
@@ -162,7 +162,7 @@ BSS_rmse_test <- sqrt(mean((testset$Concrete.CS - BSS_testset_predictions)^2))
 
 Evaluation: After using these 3 subset selection methods, all 3 have very similar predictive performance. None had a significant advantage in preictive accuracy.
 
-# Comparing Model Selection Methods, based on Akaike Information Criterion (AIC)
+## Comparing Model Selection Methods using Akaike Information Criterion (AIC)
 ```
 fit_all <- lm(Concrete.CS ~ ., data = concrete_df)
 
@@ -201,8 +201,8 @@ step(fit_start, direction = "both", scope = formula(fit_all))
 
 Evaluation: Forward Selection and Backwards Elimination produced the same AIC (4832.91), indicating they selected the same set of variables. While Stepwise Regression has a higher AIC (5801.45), suggesting overfitting due to unnecessary complexity. This could be due to multicollinearity or the inclusion of less significant predictors.
 
-# Classification And Regression Tree (CART)
-## Building & Optimizing CART Tree
+## Classification And Regression Tree (CART)
+### Building & Optimizing CART Tree
 ```
 # Determining Cross-Validation (CV) Error Cap
 model1 <- rpart(Concrete.CS ~ ., data = trainset, method = 'anova', cp = 0)
@@ -264,15 +264,13 @@ plotcp(cart_model_1SE)
 # Visualizing Pruned Decision Tree
 model <- c(model, "CART 1SE")
 rpart.plot(cart_model_1SE, nn = T, main = "Optimal Tree", cex = 0.4, tweak = 0.95, lwd = 3, faclen = 0)
-```
-![image](https://github.com/user-attachments/assets/1f45af7b-c88a-41b6-9296-61620b1f86f0)
 
-```
 RMSE_train <- c(RMSE_train, round(sqrt(mean((trainset$Concrete.CS - predict(cart_model_1SE))^2))))
 RMSE_test <- c(RMSE_test, round(sqrt(mean((testset$Concrete.CS - predict(cart_model_1SE, newdata = testset))^2))))
 ```
+![image](https://github.com/user-attachments/assets/1f45af7b-c88a-41b6-9296-61620b1f86f0)
 
-# Random Forest
+### Random Forest
 ```
 # Training the Random Forest Model
 RF_model <- randomForest(Concrete.CS ~ . , data=trainset)
