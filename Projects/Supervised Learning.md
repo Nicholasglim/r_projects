@@ -30,13 +30,13 @@ concrete_df$Age..day. <- NULL
 concrete_df$Concrete.CS <- concrete_df$Concrete.compressive.strength.MPa..megapascals..
 concrete_df$Concrete.compressive.strength.MPa..megapascals.. <- NULL
 
-# Summary of dataset
+# Summary of Dataset
 summary(concrete_df)
 ```
 ![Dataset summary](https://github.com/user-attachments/assets/c1563b01-54fa-4782-b8a3-d583a9581ed3)
 
 ```
-# Correlation test
+# Correlation Test
 pearson_corr <- cor(concrete_df, method = "pearson")
 pearson_corr
 ```
@@ -75,10 +75,14 @@ Summary of trainset (top) & testset (bottom)
 ![Summary of Train/Test sets](https://github.com/user-attachments/assets/6b28ddf1-0863-4b27-a0b9-9edd4769186a)
 
 ```
-# Fitting linear model to trainset
+# Fitting Linear RTegression Model to Trainset
 model_train <- lm(Concrete.CS ~ ., data = trainset)
 model <- ("Linear Regression")
+
+# Evaluation of Linear Regression Model Trainset
 RMSE_train <- round(sqrt(mean((trainset$Concrete.CS - predict(model_train))^2)))
+
+# Evaluation of Linear Regression Model Testset
 RMSE_test <- round(sqrt(mean((testset$Concrete.CS - predict(model_train, newdata = testset))^2)))
 ```
 Root Mean Squared Error (RMSE)
@@ -92,7 +96,7 @@ Evaluation: A higher RMSE in the test set compared to the training set suggests 
 ## Comparing Subset Selection Method for Prediction using RMSE
 ### Forward Selection Method
 ```
-# Forward Selection on trainset
+# Forward Selection on Trainset
 FWDfit_p_train <- ols_step_forward_p(model_train, details = TRUE)
 ```
 ![Forward Selection part 1](https://github.com/user-attachments/assets/2c5731b1-fd4a-4699-a57b-957a2cd82495)
@@ -102,10 +106,10 @@ FWDfit_p_train <- ols_step_forward_p(model_train, details = TRUE)
 ![Forward Selection part 5](https://github.com/user-attachments/assets/c3432f6c-4fa4-4d29-a323-1206c8d8120e)
 
 ```
-# Prediction on forward selection testset
+# Prediction on Forward Selection Testset
 FWD_testset_predictions <- predict(model_train, newdata = testset)
 
-# Evaluation of testset
+# Evaluation of Forward Selection Testset
 FWD_rmse_test <- sqrt(mean((testset$Concrete.CS - FWD_testset_predictions)^2))
 ```
 | Model Version           | Train RMSE | Test RMSE |
@@ -117,16 +121,16 @@ Evaluation: After Forward Selection, the test RMSE reduced from 11 to 10.0135, i
 
 ### Backwards Elimination Method
 ```
-# Backward Elimination on trainset
+# Backward Elimination on Trainset
 BWDfit_p_train <- ols_step_backward_p(model_train, details = TRUE)
 ```
 ![Backwards Elimination](https://github.com/user-attachments/assets/6dc9766c-f4bf-4d49-b7bd-d23b2cdfea92)
 
 ```
-# Prediction on backward elimination testset
+# Prediction on Backward Elimination Testset
 BWD_testset_predictions <- predict(model_train, newdata = testset)
 
-# Evaluation of backward testset
+# Evaluation of Backward Elimination Testset
 BWD_rmse_test <- sqrt(mean((testset$Concrete.CS - BWD_testset_predictions)^2))
 ```
 
@@ -146,10 +150,10 @@ BSS_p_train <- ols_step_both_p(model_train, details = TRUE)
 ![Best Subset part 2](https://github.com/user-attachments/assets/70fbba18-bf45-4c04-9614-2a85ac74165d)
 
 ```
-# Prediction on best subset testset
+# Prediction on Best Subset Testset
 BSS_testset_predictions <- predict(model_train, newdata = testset)
 
-# Evaluation of best subset testset
+# Evaluation of Best Subset Testset
 BSS_rmse_test <- sqrt(mean((testset$Concrete.CS - BSS_testset_predictions)^2))
 ```
 
