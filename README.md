@@ -16,11 +16,11 @@ List of datasets along with descriptions
 - `Rings`: Integer, used to calculate age.  
 
 ### Dataset Attribution & Sources
+- **Original Contributor**: Marine Resources Division, Marine Research Laboratories - Taroona, Department of Primary Industry and Fisheries, Tasmania.
 - **Kaggle Contributor**: Rodolfo Mendes  
-- **Original Source**: UCI Machine Learning Repository  
-- **License**: [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).  
+- **UCI Original Source**: [https://archive.ics.uci.edu/dataset/1/abalone](https://archive.ics.uci.edu/dataset/1/abalone) 
 - **Kaggle Dataset**: [https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset](https://www.kaggle.com/datasets/rodolfomendes/abalone-dataset)  
-- **UCI Original Source**: [https://archive.ics.uci.edu/dataset/1/abalone](https://archive.ics.uci.edu/dataset/1/abalone)  
+- **License**: [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).  
 
 No modifications were made to the dataset.
 
@@ -41,12 +41,12 @@ No modifications were made to the dataset.
 - `Age`: Age of the concrete (days)  
 - `Concrete Compressive Strength`: The target variable (MPa) 
 
-### Dataset Attribution & Source
+### Dataset Attribution & Sources
+- **Original Contributor**: Prof. I-Cheng Yeh
 - **Kaggle Contributor**: Nitesh Yadav  
-- **Original Source**: UCI Machine Learning Repository  
-- **License**: [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).  
+- **UCI Original Source**: [https://archive.ics.uci.edu/dataset/1/abalone](https://archive.ics.uci.edu/dataset/1/abalone)   
 - **Kaggle Dataset**: [https://www.kaggle.com/datasets/niteshyadav3103/concrete-compressive-strength](https://www.kaggle.com/datasets/niteshyadav3103/concrete-compressive-strength)  
-- **UCI Original Source**: [https://archive.ics.uci.edu/dataset/1/abalone](https://archive.ics.uci.edu/dataset/1/abalone)  
+- **License**: [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).  
 
 No modifications were made to the dataset.
 
@@ -72,8 +72,8 @@ No modifications were made to the dataset.
 
 ### Dataset Attribution & Source
 - **Kaggle Contributor**: Federico Soriano  
-- **License**: [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).  
 - **Kaggle Dataset**: [https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction](https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction)  
+- **License**: [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
 
 No modifications were made to the dataset.
 
