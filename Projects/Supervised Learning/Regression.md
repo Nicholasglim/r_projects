@@ -56,113 +56,169 @@ Scatter Plot
 
 ![Scatterplot](https://github.com/user-attachments/assets/3e6defbd-4acf-4148-8fbb-84ccb9e9c90f)
 
-## Linear Regression Model
+## Linear Regression Base Model
+```
+linear_model_base <- lm(Concrete.CS ~ ., data = concrete_df)
+summary(linear_model_base)
+```
+![Linear Regression Base Model](https://github.com/user-attachments/assets/0bd38008-22d8-4cec-93bd-9763c3ecf231)
+
+```
+# Calculate RMSE for the base model
+predictions_base <- predict(linear_model_base, newdata = concrete_df)
+rmse_base <- sqrt(mean((concrete_df$Concrete.CS - predictions_base)^2))
+cat("RMSE (Base Model - No Train/Test Split):", rmse_base, "\n")
+```
+
+**R²**: 0.6155
+
+R² represents the proportion of variance in the dependent variable that is explained by the independent variables. The model explains 61.55% of the variability in the dependent variable
+
+## Linear Regression Model (with train/test split)
 Using a Train-Test split of 70:30
 ```
 set.seed(2024)
+
 # Train-Test set
 train <- sample.split(Y = concrete_df$Concrete.CS, SplitRatio = 0.7)
 trainset <- subset(concrete_df, train==T)
 testset <- subset(concrete_df, train==F)
 
-summary(trainset$Concrete.CS)
-summary(testset$Concrete.CS)
+# Fit Linear Model with Cross-Validation
+cv_model <- train(Concrete.CS ~ ., data = trainset, method = "lm", trControl = train_control)
+
+# RMSE from cross-validation
+cv_rmse <- cv_model$results$RMSE
+cv_r2 <- cv_model$results$Rsquared
+
+# Feature Selection with K-Fold CV
+
+# Forward Selection with K-Fold CV
+FWD_model <- train(Concrete.CS ~ ., data = trainset, method = "leapForward", trControl = train_control)
+FWD_rmse <- FWD_model$results$RMSE
+FWD_r2 <- FWD_model$results$Rsquared
+
+# Backward Elimination with K-Fold CV
+BWD_model <- train(Concrete.CS ~ ., data = trainset, method = "leapBackward", trControl = train_control)
+BWD_rmse <- BWD_model$results$RMSE
+BWD_r2 <- BWD_model$results$Rsquared
+
+# Best Subset Selection with K-Fold CV
+BSS_model <- train(Concrete.CS ~ ., data = trainset, method = "leapSeq", trControl = train_control)
+BSS_rmse <- BSS_model$results$RMSE
+BSS_r2 <- BSS_model$results$Rsquared
+
+# Print Results
+cat("5-Fold Cross-Validation RMSE (Full Model):", mean(cv_rmse), "\n")
+cat("5-Fold Cross-Validation R² (Full Model):", mean(cv_r2), "\n")
+cat("5-Fold Cross-Validation RMSE (Forward Selection):", mean(FWD_rmse), "\n")
+cat("5-Fold Cross-Validation R² (Forward Selection):", mean(FWD_r2), "\n")
+cat("5-Fold Cross-Validation RMSE (Backward Elimination):", mean(BWD_rmse), "\n")
+cat("5-Fold Cross-Validation R² (Backward Elimination):", mean(BWD_r2), "\n")
+cat("5-Fold Cross-Validation RMSE (Best Subset Selection):", mean(BSS_rmse), "\n")
+cat("5-Fold Cross-Validation R² (Best Subset Selection):", mean(BSS_r2), "\n")
 ```
-Summary of trainset (top) & testset (bottom)
+| Model                  | CV RMSE  | Train RMSE | Test RMSE | CV R2   | 
+|------------------------|----------|------------|-----------|---------|
+| Base Model             | -        | 10.35361   | 9.86342   | -       |
+| Full Model (5-Fold CV) | 10.68926 | 10.53155   | 10.01351  | 0.59834 |
+| Forward Selection      | 12.68548 | 11.38453   | 10.81977  | 0.41306 |
+| Backward Elimination   | 12.57990 | 11.23371   | 10.84777  | 0.42230 |
+| Best Subset Selection  | 12.48967 | 11.23371   | 10.84777  | 0.43945 |
 
-![Summary of Train/Test sets](https://github.com/user-attachments/assets/6b28ddf1-0863-4b27-a0b9-9edd4769186a)
+Root Mean Squared Error (RMSE) measures the magnitude of the errors made by the model.
 
+Base Model:
+
+- The Base Model without cross-validation has a Train RMSE of 10.35361 and a Test RMSE of 9.86342, which suggests that it performs slightly better on the test set compared to the Full Model.
+- However, since it does not use cross-validation, its performance may not generalize well to unseen data.
+
+Full Model (5-Fold CV):
+
+- The Full Model with cross-validation has a CV RMSE of 10.68926 and a CV R² of 0.59834, indicating that it generalizes well across folds.
+- The Train RMSE (10.53155) is close to the Test RMSE (10.01351), suggesting good generalization without significant overfitting.
+- The Full Model outperforms all feature selection methods in terms of both CV RMSE and CV R².
+
+Forward Selection:
+
+- Forward Selection has the highest CV RMSE (12.68548) and the lowest CV R² (0.41306) among all models, indicating weaker predictive performance.
+- The Train RMSE (11.38453) is higher than that of the Full Model, and the Test RMSE (10.81977) is also worse than the Full Model.
+- This suggests that Forward Selection may have removed important predictors, leading to reduced accuracy.
+
+Backward Elimination:
+
+- Backward Elimination performs slightly better than Forward Selection but still worse than the Full Model.
+- The CV RMSE is 12.57990, and CV R² is 0.42230, indicating moderate performance.
+- The Train RMSE (11.23371) and Test RMSE (10.84777) are both higher than those of the Full Model, suggesting that this method also excluded useful predictors.
+
+Best Subset Selection:
+
+- Best Subset Selection has a slightly lower CV RMSE (12.48967) and higher CV R² (0.43945) compared to Forward and Backward methods but still underperforms compared to the Full Model.
+- The Train RMSE (11.23371) and Test RMSE (10.84777) are identical to those of Backward Elimination, indicating similar predictor selection.
+
+## Regularised Linear Regression
 ```
-# Fitting Linear RTegression Model to Trainset
-model_train <- lm(Concrete.CS ~ ., data = trainset)
-model <- ("Linear Regression")
-
-# Evaluation of Linear Regression Model Trainset
-RMSE_train <- round(sqrt(mean((trainset$Concrete.CS - predict(model_train))^2)))
-
-# Evaluation of Linear Regression Model Testset
-RMSE_test <- round(sqrt(mean((testset$Concrete.CS - predict(model_train, newdata = testset))^2)))
+X_train <- as.matrix(trainset[, -which(names(trainset) == "Concrete.CS")])
+Y_train <- trainset$Concrete.CS
+X_test <- as.matrix(testset[, -which(names(testset) == "Concrete.CS")])
+Y_test <- testset$Concrete.CS
 ```
-Root Mean Squared Error (RMSE)
-
-| Model Version | Train RMSE | Test RMSE |
-|---------------|------------|-----------|
-| Initial Model | 10         | 11        |
-
-Evaluation: A higher RMSE in the test set compared to the training set suggests potential overfitting, as the model performs better on the training data than on unseen data. However, if the difference is small, it may still indicate reasonable generalization ability.
-
-## Comparing Subset Selection Method for Prediction using RMSE
-### Forward Selection Method
+### Lasso Regularisation
 ```
-# Forward Selection on Trainset
-FWDfit_p_train <- ols_step_forward_p(model_train, details = TRUE)
+# Fit Lasso model (with cross-validation to find optimal lambda)
+lasso_model <- cv.glmnet(X_train, Y_train, alpha = 1)
+
+# Get the best lambda from cross-validation
+best_lambda_lasso <- lasso_model$lambda.min
+cat("Best lambda for Lasso:", best_lambda_lasso, "\n") # Best lambda for Lasso: 0.007082498 
+
+# Predictions on training set
+lasso_predictions_train <- predict(lasso_model, s = best_lambda_lasso, newx = X_train)
+lasso_rmse_train <- sqrt(mean((Y_train - lasso_predictions_train)^2)) # Train RMSE
+cat("Lasso RMSE (Train):", lasso_rmse_train, "\n") # Lasso RMSE (Train): 10.53208 
+
+# Calculate Test RMSE
+lasso_predictions_test <- predict(lasso_model, s = best_lambda_lasso, newx = X_test)
+lasso_rmse_test <- sqrt(mean((Y_test - lasso_predictions_test)^2)) # Test RMSE
+cat("Lasso RMSE (Test):", lasso_rmse_test, "\n") # Lasso RMSE (Test): 10.01103 
 ```
-![Forward Selection part 1](https://github.com/user-attachments/assets/2c5731b1-fd4a-4699-a57b-957a2cd82495)
-![Forward Selection part 2](https://github.com/user-attachments/assets/02e94efc-2396-4964-91c9-d9435d370cd0)
-![Forward Selection part 3](https://github.com/user-attachments/assets/282e9068-eea9-4a42-acb1-015dce0a6035)
-![Forward Selection part 4](https://github.com/user-attachments/assets/bc9a01a3-02c7-48ae-b3ab-d35a0fc8f20c)
-![Forward Selection part 5](https://github.com/user-attachments/assets/c3432f6c-4fa4-4d29-a323-1206c8d8120e)
-
+### Ridge regression
 ```
-# Prediction on Forward Selection Testset
-FWD_testset_predictions <- predict(model_train, newdata = testset)
+ridge_model <- cv.glmnet(X_train, Y_train, alpha = 0)  # alpha = 0 for Ridge
 
-# Evaluation of Forward Selection Testset
-FWD_rmse_test <- sqrt(mean((testset$Concrete.CS - FWD_testset_predictions)^2))
+# Get the best lambda from cross-validation
+best_lambda_ridge <- ridge_model$lambda.min
+cat("Best lambda for Ridge:", best_lambda_ridge, "\n") # Best lambda for Ridge: 0.8334769 
+
+# Predictions on training set
+ridge_predictions_train <- predict(ridge_model, s = best_lambda_ridge, newx = X_train)
+ridge_rmse_train <- sqrt(mean((Y_train - ridge_predictions_train)^2)) # Train RMSE
+cat("Ridge RMSE (Train):", ridge_rmse_train, "\n") # Ridge RMSE (Train): 10.66311 
+
+# Calculate Test RMSE
+ridge_predictions_test <- predict(ridge_model, s = best_lambda_ridge, newx = X_test)
+ridge_rmse_test <- sqrt(mean((Y_test - ridge_predictions_test)^2)) # Test RMSE
+cat("Ridge RMSE (Test):", ridge_rmse_test, "\n") # Ridge RMSE (Test): 10.09583 
 ```
-| Model Version           | Train RMSE | Test RMSE |
-|-------------------------|------------|-----------|
-| Initial Model           | 10         | 11        |
-| After Forward Selection | 10         | 10.0135   |
+| Model                  | Train RMSE | Test RMSE | 
+|------------------------|------------|-----------|
+| Base Model             | 10.35361   | 9.86342   |
+| Full Model (5-Fold CV) | 10.53155   | 10.01351  |
+| Forward Selection      | 11.38453   | 10.81977  |
+| Backward Elimination   | 11.23371   | 10.84777  |
+| Best Subset Selection  | 11.23371   | 10.84777  |
+| Lasso                  | 10.53208   | 10.01103  |
+| Ridge                  | 10.66311   | 10.09583  |
 
-Evaluation: After Forward Selection, the test RMSE reduced from 11 to 10.0135, indicating improved generalization by eliminating unnecessary features. Additionally, the new test RMSE is much closer to the training RMSE, suggesting a more balanced model with reduced overfitting. Overall, forward selection enhanced model performance by improving accuracy on the test set while maintaining a good fit on the training data, making the model more robust and generalizable.
+Lasso Regression:
 
-### Backwards Elimination Method
-```
-# Backward Elimination on Trainset
-BWDfit_p_train <- ols_step_backward_p(model_train, details = TRUE)
-```
-![Backwards Elimination](https://github.com/user-attachments/assets/6dc9766c-f4bf-4d49-b7bd-d23b2cdfea92)
+- The Test RMSE for Lasso (10.01103) is slightly lower than that of the Full Model (10.01351), indicating a marginal improvement in generalization.
+- Since Lasso performs feature selection by shrinking some coefficients to zero, it suggests that a few variables might be less important. However, the improvement is negligible.
 
-```
-# Prediction on Backward Elimination Testset
-BWD_testset_predictions <- predict(model_train, newdata = testset)
+Ridge Regression:
 
-# Evaluation of Backward Elimination Testset
-BWD_rmse_test <- sqrt(mean((testset$Concrete.CS - BWD_testset_predictions)^2))
-```
-
-| Model Version               | Train RMSE | Test RMSE |
-|-----------------------------|------------|-----------|
-| Initial Model               | 10         | 11        |
-| After Forward Selection     | 10         | 10.0135   |
-| After Backwards Elimination | 10         | 10.0135   |
-
-Evaluation: Both subset selection methods performed equally well in terms of Test RMSE.
-
-### Best Subset Method
-```
-BSS_p_train <- ols_step_both_p(model_train, details = TRUE)
-```
-![Best Subset part 1](https://github.com/user-attachments/assets/20109a0e-a9a9-464c-ae2d-4b3ea122ed4b)
-![Best Subset part 2](https://github.com/user-attachments/assets/70fbba18-bf45-4c04-9614-2a85ac74165d)
-
-```
-# Prediction on Best Subset Testset
-BSS_testset_predictions <- predict(model_train, newdata = testset)
-
-# Evaluation of Best Subset Testset
-BSS_rmse_test <- sqrt(mean((testset$Concrete.CS - BSS_testset_predictions)^2))
-```
-
-| Model Version               | Train RMSE | Test RMSE |
-|-----------------------------|------------|-----------|
-| Initial Model               | 10         | 11        |
-| After Forward Selection     | 10         | 10.0135   |
-| After Backwards Elimination | 10         | 10.0135   |
-| After Best Subset           | 10         | 10.0135   |
-
-Evaluation: After using these 3 subset selection methods, all 3 have very similar predictive performance. None had a significant advantage in preictive accuracy.
+- The Test RMSE for Ridge (10.09583) is slightly higher than that of the Full Model (10.01351), indicating a small reduction in generalization performance.
+- Ridge shrinks coefficients without excluding them, suggesting that all variables contribute to the model.
 
 ## Comparing Model Selection Methods using Akaike Information Criterion (AIC)
 ```
