@@ -184,7 +184,8 @@ cat("Lasso RMSE (Test):", lasso_rmse_test, "\n") # Lasso RMSE (Test): 10.01103
 ```
 ### Ridge regression
 ```
-ridge_model <- cv.glmnet(X_train, Y_train, alpha = 0)  # alpha = 0 for Ridge
+# Fit Ridge model
+ridge_model <- cv.glmnet(X_train, Y_train, alpha = 0)
 
 # Get the best lambda from cross-validation
 best_lambda_ridge <- ridge_model$lambda.min
