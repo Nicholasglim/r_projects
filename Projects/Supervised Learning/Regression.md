@@ -34,11 +34,16 @@ Correlation Plot
 
 ```
 # Scatterplot Matrix
+panel.smooth <- function(x, y) {
+  points(x, y)
+  abline(lm(y ~ x), col = "blue")
+}
 pairs(~ . , panel=panel.smooth, data = concrete_df, main = "Scatterplot Matrix of Concrete Strength data")
 ```
 Scatter Plot
 
-![Scatter Plot](https://github.com/user-attachments/assets/b6fca652-6846-4b5d-85f5-d386d0a6d458)
+![Scatterplot](https://github.com/user-attachments/assets/83c631d1-2bec-45d8-8656-adc54d75e765)
+
 
 ## Finding the Strongest Concrete mix
 ```
@@ -66,10 +71,10 @@ OOB (Out-Of-Bag) Error Rate vs. mtry Line Graph
 
 | mtry | OOBError |
 |------|----------|
-| 1    | 65.04622 |
-| 2    | 34.91246 |
-| 4    | 26.90464 |
-| 8    | 28.96092 |
+| 1    | 58.70796 |
+| 2    | 34.91938 |
+| 4    | 25.43088 |
+| 8    | 25.58883 |
 
 ![Line Graph](https://github.com/user-attachments/assets/33917b65-a26a-4d8b-8598-9d6a296d045b)
 
@@ -88,7 +93,7 @@ rf_rmse <- sqrt(mean((testset$Concrete.CS - rf_predictions)^2))
 cat("Random Forest RMSE on Test Data:", rf_rmse, "\n")
 ```
 
-Random Forest RMSE on Test Data: 5.646924 
+Random Forest RMSE on Test Data: 5.676416
 
 ```
 # Calculate R2 for evaluation
@@ -98,7 +103,7 @@ RF_R2 <- 1 - sum((actuals - predictions)^2) / sum((actuals - mean(actuals))^2)
 cat("Random Forest R-squared (R2) value:", RF_R2, "\n")
 ```
 
-Random Forest R-squared (R2) value: 0.8857156 
+Random Forest R-squared (R2) value: 0.8845187
 
 ## Find the Best Material Mix using Bayesian Optimization
 ```
