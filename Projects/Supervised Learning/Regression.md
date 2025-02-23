@@ -8,7 +8,13 @@
 
 ---
 ```
+# Install required packages
 install.packages("rBayesianOptimization")
+install.packages("randomForest")
+install.packages("caret")
+install.packages("tidyverse")
+install.packages("corrplot")
+
 library(rBayesianOptimization)
 library(randomForest)
 library(caret)
