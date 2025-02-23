@@ -20,6 +20,9 @@ concrete_df <- read.csv("https://raw.githubusercontent.com/Nicholasglim/r_projec
 
 # Rename Columns
 colnames(concrete_df) <- c("Cement", "BF.Slag", "Fly.Ash", "Water", "Superplasticizer", "Coarse.Agg", "Fine.Agg", "Age", "Concrete.CS")
+
+# Remove rows where Age < 28 days (As Concrete reaches 99% strength at 28 days)
+concrete_df <- concrete_df %>% filter(Age >= 28)
 ```
 
 ## Data Exploration
@@ -30,7 +33,7 @@ corrplot(pearson_corr, type = "upper", method = "pie", main = "Correlation Matri
 ```
 Correlation Plot
 
-![Correlation Plot](https://github.com/user-attachments/assets/989166b7-84dd-4783-b200-4ae1f03124b1)
+![Correlation Plot](https://github.com/user-attachments/assets/af40012c-7055-4c4b-b97e-ff1d0bba2ff2)
 
 ```
 # Scatterplot Matrix
@@ -42,8 +45,7 @@ pairs(~ . , panel=panel.smooth, data = concrete_df, main = "Scatterplot Matrix o
 ```
 Scatter Plot
 
-![Scatterplot](https://github.com/user-attachments/assets/83c631d1-2bec-45d8-8656-adc54d75e765)
-
+![Scatter Plot](https://github.com/user-attachments/assets/56c91282-e6f5-4c6e-b7b8-3ba19411f9f9)
 
 ## Finding the Strongest Concrete mix
 ```
@@ -54,7 +56,7 @@ print(best_mix)
 
 |        | Cement | BF.Slag | Fly.Ash | Water | Superplaticizer | Coarse.Agg | Fine.Agg | Age | Concrete.CS |
 |--------|--------|---------|---------|-------|-----------------|------------|----------|-----|-------------|
-| 182    | 389.9  | 189     |       0 | 145.9 |              22 |      944.7 |    755.8 |  91 |        82.6 |
+| 125    | 389.9  | 189     |       0 | 145.9 |              22 |      944.7 |    755.8 |  91 |        82.6 |
 
 ## Train Random Forest Model
 ```
@@ -71,18 +73,18 @@ OOB (Out-Of-Bag) Error Rate vs. mtry Line Graph
 
 | mtry | OOBError |
 |------|----------|
-| 1    | 58.70796 |
-| 2    | 34.91938 |
-| 4    | 25.43088 |
-| 8    | 25.58883 |
+| 1    | 49.64414 |
+| 2    | 34.80255 |
+| 4    | 32.25818 |
+| 8    | 30.92297 |
 
-![Line Graph](https://github.com/user-attachments/assets/33917b65-a26a-4d8b-8598-9d6a296d045b)
+![Line Graph](https://github.com/user-attachments/assets/baa29fc6-655c-4d27-8f28-2f9403f4fab3)
 
-Interpretation: mtry = 8 has a higher OOB error than mtry = 4. Thus, mtry = 4 is chosen. A lower OOB error indicates how well the Random Forest model generalizes to unseen data.
+Interpretation: A lower OOB error indicates how well the Random Forest model generalizes to unseen data. Thus, mtry = 8 is chosen.
 
 ```
 # Manually set best_mtry based on the output of tuneRF
-best_mtry <- 4
+best_mtry <- 8
 
 # Random Forest
 rf_model <- randomForest(Concrete.CS ~ ., data = trainset, ntree = 500, mtry = best_mtry)
@@ -93,7 +95,7 @@ rf_rmse <- sqrt(mean((testset$Concrete.CS - rf_predictions)^2))
 cat("Random Forest RMSE on Test Data:", rf_rmse, "\n")
 ```
 
-Random Forest RMSE on Test Data: 5.676416
+Random Forest RMSE on Test Data: 5.172754
 
 ```
 # Calculate R2 for evaluation
@@ -103,7 +105,7 @@ RF_R2 <- 1 - sum((actuals - predictions)^2) / sum((actuals - mean(actuals))^2)
 cat("Random Forest R-squared (R2) value:", RF_R2, "\n")
 ```
 
-Random Forest R-squared (R2) value: 0.8845187
+Random Forest R-squared (R2) value: 0.8910326
 
 ## Find the Best Material Mix using Bayesian Optimization
 ```
