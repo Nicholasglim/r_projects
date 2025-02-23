@@ -137,90 +137,76 @@ BayesSearch <- BayesianOptimization(
 best_predicted_mix <- BayesSearch$Best_Par
 print(best_predicted_mix)
 ```
+
 Best Parameters Found:
 
-Cement = 540.0000 kg/m^3 
-
-BF.Slag = 359.4000 kg/m^3 
-
-Fly.Ash = 1.592888 kg/m^3 
-
-Water = 121.8000 kg/m^3 
-
-Superplasticizer = 30.44815 kg/m^3 
-
-Coarse.Agg = 801.0000 kg/m^3 
-
-Fine.Agg = 665.4771 kg/m^3 
-
-Age = 223.6235 days
-
-Predicted Compressive Strength = 71.33776 MPa, megapascals
-
-Note: Only 20 iterations have been carried out, due to harware limitations.
+| Component        | Best Actual Mix | Bayesian Predicted Mix |
+|------------------|-----------------|------------------------|
+| Cement           | 389.9 kg/m^3    | 509.2 kg/m^3           |
+| BF.Slag          | 189 kg/m^3      | 359.4 kg/m^3           |
+| Fly.Ash          | 0 kg/m^3        | 1.59 kg/m^3            |
+| Water            | 145.9 kg/m^3    | 121.8 kg/m^3           |
+| Superplasticizer | 22	kg/m^3       | 32.2 kg/m^3            |
+| Coarse.Agg       | 944.7 kg/m^3    | 982.9 kg/m^3           |
+| Fine.Agg         | 755.8 kg/m^3    | 594 kg/m^3             |
+| Age              | 91	days         | 188 days               |
+| Concrete.CS	     | 82.6 mPa	       | 74.06 mPa              |
 
 ## Visualization
 ```
-# Convert from wide to long format
-best_mix_long <- pivot_longer(best_mix, cols = -Concrete.CS, names_to = "Component", values_to = "Value")
+# Convert bayesian_optimised_df to wide format
+bayesian_optimised_wide <- bayesian_optimised_df %>%
+  select(Component, Value) %>%
+  pivot_wider(names_from = Component, values_from = Value)
 
-# Convert best predicted mix to data frame format
-best_predicted_df <- data.frame(
-  Component = names(best_predicted_mix),
-  Value = as.numeric(best_predicted_mix)
-)
+# Add Type label
+bayesian_optimised_wide$Type <- "Bayesian Optimized Mix"
 
-# Add a Predicted_CS column
-best_predicted_df$Predicted_CS <- predict(rf_model, newdata = as.data.frame(t(best_predicted_mix)))
+# Ensure best_actual_mix_df is structured similarly
+best_actual_mix_df$Type <- "Best Actual Mix"
 
-# Changing best_predicted_df to best_predicted_long
-best_predicted_long <- best_predicted_df
+# Combine both datasets
+comparison_df <- bind_rows(best_actual_mix_df, bayesian_optimised_wide)
 
-best_mix_long$Type <- "Best Actual"
-best_predicted_long$Type <- "Best Predicted"
+# Reshape data for ggplot
+comparison_df_long <- comparison_df %>%
+  select(-Concrete.CS) %>%  # Remove strength column
+  pivot_longer(cols = -Type, names_to = "Component", values_to = "Amount")
 
-combined_data <- bind_rows(best_mix_long, best_predicted_long)
-
-# Plot the best material mix
-ggplot(combined_data, aes(x = Component, y = Value, fill = Type)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  theme_minimal() +
-  labs(title = "Comparison of Best Actual vs Predicted Mix",
-       x = "Concrete Component", y = "Amount (kg/m³)",
+# Create bar chart with value labels
+ggplot(comparison_df_long, aes(x = Component, y = Amount, fill = Type)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.8)) +
+  geom_text(aes(label = round(Amount, 1)),  # Round values for readability
+            position = position_dodge(width = 0.8), 
+            vjust = -0.3, 
+            size = 5, 
+            fontface = "bold") +  # Make numbers bold
+  labs(title = "Comparison of Best Actual Mix vs Bayesian Optimized Mix",
+       x = "Concrete Mix Component",
+       y = "Amount (kg/m³)",
        fill = "Mix Type") +
+  theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
 Best Actual vs Predicted Mix Grouped Bar Chart
 
-![Bar Chart](https://github.com/user-attachments/assets/2350311a-2705-4cda-8174-74cd4838031b)
+![Bar Chart](https://github.com/user-attachments/assets/a1f993d7-ea85-4836-912e-a23a70a2f376)
 
 **Component Comparison**
 
-Age: The model suggests more than double the curing time than in Best Actual Mix.
+Age: The Bayesian Optimized Mix suggests a significantly longer curing time (188 days) compared to the Best Actual Mix (91 days).
 
-BF.Slag: The model suggests almost twice the amount of Blast Furnance Slag, compared to the Best Actual Mix.
+BF.Slag (Blast Furnace Slag): The optimized mix recommends a considerably higher amount of BF.Slag (359.4 kg/m³) compared to the best actual mix (189 kg/m³).
 
-Cement: The model suggests a higher amount of Cement than the Best Actual Mix.
+Cement: The Bayesian Optimization suggests a higher quantity of Cement (509.2 kg/m³) than the Best Actual Mix (389.9 kg/m³).
 
-Coarse.Agg: The model suggests a large decrease in the amount of Coarse Aggregate compared to the Best Actual Mix.
+Coarse.Agg (Coarse Aggregate): The optimized mix indicates a slightly higher amount of Coarse Aggregate at 982.9 kg/m³, compared to the best actual mix at 944.7 kg/m³.
 
-Fine.Agg: The model suggests a decrease in Fine Aggregate as well, but not as drastic as the decrease in Coarse Aggregate.
+Fine.Agg (Fine Aggregate): The optimized mix uses a smaller amount of Fine Aggregate (594 kg/m³) compared to the Best Actual Mix (755.8 kg/m³).
 
-Fly.Ash: The model almost eliminates Fly Ash.
+Fly.Ash: The Bayesian Optimized Mix proposes a slight amount of Fly Ash (1.59 kg/m³), while the Best Actual Mix has 0 kg/m³.
 
-Superplasticizer: The model recommends a slightly higher amount of Superplasticizer.
+Superplasticizer: The optimized mix requires a slightly larger amount of Superplasticizer (32.2 kg/m³) than the Best Actual Mix (22 kg/m³).
 
-Water: The model suggests a decrease in the amount of Water than in the Best Actual Mix.
-
-| Component        | Best Actual | Best Predicted |
-|------------------|-------------|----------------|
-| Cement           | 389.9       |	540           |
-| BF.Slag          | 189         |	359.4         |
-| Fly.Ash          | 0           | 1.592888       |
-| Water            | 145.9       | 121.8          |
-| Superplasticizer | 22	         | 30.448149      |
-| Coarse.Agg       | 944.7       | 801            |
-| Fine.Agg         | 755.8       | 665.477096     |
-| Age              | 91	         | 223.623501     |
-| Concrete.CS	     | 82.6	       | 71.33776       |
+Water: The optimized mix recommends slightly less water (121.8 kg/m³) compared to the best actual mix (145.9 kg/m³).
