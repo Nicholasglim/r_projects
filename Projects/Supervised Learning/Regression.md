@@ -79,18 +79,18 @@ OOB (Out-Of-Bag) Error Rate vs. mtry Line Graph
 
 | mtry | OOBError |
 |------|----------|
-| 1    | 49.64414 |
-| 2    | 34.80255 |
-| 4    | 32.25818 |
-| 8    | 30.92297 |
+| 2    | 32.32853 |
+| 3    | 29.95563 |
+| 4    | 29.03389 |
+| 6    | 30,04430 |
 
 ![Line Graph](https://github.com/user-attachments/assets/baa29fc6-655c-4d27-8f28-2f9403f4fab3)
 
-Interpretation: A lower OOB error indicates how well the Random Forest model generalizes to unseen data. Thus, mtry = 8 is chosen.
+Interpretation: A lower OOB error indicates how well the Random Forest model generalizes to unseen data. Thus, mtry = 4 is chosen.
 
 ```
 # Manually set best_mtry based on the output of tuneRF
-best_mtry <- 8
+best_mtry <- 4
 
 # Random Forest
 rf_model <- randomForest(Concrete.CS ~ ., data = trainset, ntree = 500, mtry = best_mtry)
@@ -101,7 +101,7 @@ rf_rmse <- sqrt(mean((testset$Concrete.CS - rf_predictions)^2))
 cat("Random Forest RMSE on Test Data:", rf_rmse, "\n")
 ```
 
-Random Forest RMSE on Test Data: 5.172754
+Random Forest RMSE on Test Data: 5.934303
 
 ```
 # Calculate R2 for evaluation
@@ -111,7 +111,7 @@ RF_R2 <- 1 - sum((actuals - predictions)^2) / sum((actuals - mean(actuals))^2)
 cat("Random Forest R-squared (R2) value:", RF_R2, "\n")
 ```
 
-Random Forest R-squared (R2) value: 0.8910326
+Random Forest R-squared (R2) value: 0.8582064
 
 ## Find the Best Material Mix using Bayesian Optimization
 ```
@@ -148,15 +148,15 @@ Best Parameters Found:
 
 | Component        | Best Actual Mix | Bayesian Predicted Mix |
 |------------------|-----------------|------------------------|
-| Cement           | 389.9 kg/m^3    | 509.2 kg/m^3           |
-| BF.Slag          | 189 kg/m^3      | 359.4 kg/m^3           |
-| Fly.Ash          | 0 kg/m^3        | 1.59 kg/m^3            |
+| Cement           | 389.9 kg/m^3    | 352.48 kg/m^3          |
+| BF.Slag          | 189 kg/m^3      | 285.79 kg/m^3          |
+| Fly.Ash          | 0 kg/m^3        | 2.2e-16 kg/m^3         |
 | Water            | 145.9 kg/m^3    | 121.8 kg/m^3           |
-| Superplasticizer | 22	kg/m^3       | 32.2 kg/m^3            |
-| Coarse.Agg       | 944.7 kg/m^3    | 982.9 kg/m^3           |
-| Fine.Agg         | 755.8 kg/m^3    | 594 kg/m^3             |
-| Age              | 91	days         | 188 days               |
-| Concrete.CS	     | 82.6 mPa	       | 74.06 mPa              |
+| Superplasticizer | 22	kg/m^3       | 24.68 kg/m^3           |
+| Coarse.Agg       | 944.7 kg/m^3    | 970.73 kg/m^3          |
+| Fine.Agg         | 755.8 kg/m^3    | 745.5 kg/m^3           |
+| Age              | 91	days         | 182 days               |
+| Concrete.CS	     | 82.6 mPa	       | 71.53 mPa              |
 
 ## Visualization
 ```
@@ -195,24 +195,6 @@ ggplot(comparison_df_long, aes(x = Component, y = Amount, fill = Type)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-Best Actual vs Predicted Mix Grouped Bar Chart
+Best Actual Mix vs Bayesian Optimised Mix Grouped Bar Chart
 
-![Bar Chart](https://github.com/user-attachments/assets/a1f993d7-ea85-4836-912e-a23a70a2f376)
-
-**Component Comparison**
-
-Age: The Bayesian Optimized Mix suggests a significantly longer curing time (188 days) compared to the Best Actual Mix (91 days).
-
-BF.Slag (Blast Furnace Slag): The optimized mix recommends a considerably higher amount of BF.Slag (359.4 kg/m³) compared to the best actual mix (189 kg/m³).
-
-Cement: The Bayesian Optimization suggests a higher quantity of Cement (509.2 kg/m³) than the Best Actual Mix (389.9 kg/m³).
-
-Coarse.Agg (Coarse Aggregate): The optimized mix indicates a slightly higher amount of Coarse Aggregate at 982.9 kg/m³, compared to the best actual mix at 944.7 kg/m³.
-
-Fine.Agg (Fine Aggregate): The optimized mix uses a smaller amount of Fine Aggregate (594 kg/m³) compared to the Best Actual Mix (755.8 kg/m³).
-
-Fly.Ash: The Bayesian Optimized Mix proposes a slight amount of Fly Ash (1.59 kg/m³), while the Best Actual Mix has 0 kg/m³.
-
-Superplasticizer: The optimized mix requires a slightly larger amount of Superplasticizer (32.2 kg/m³) than the Best Actual Mix (22 kg/m³).
-
-Water: The optimized mix recommends slightly less water (121.8 kg/m³) compared to the best actual mix (145.9 kg/m³).
+![Comparison Bar Chart](https://github.com/user-attachments/assets/7ac015d1-c618-483e-839a-f198667cf405)
