@@ -27,9 +27,11 @@ concrete_df <- read.csv("https://raw.githubusercontent.com/Nicholasglim/r_projec
 # Rename Columns
 colnames(concrete_df) <- c("Cement", "BF.Slag", "Fly.Ash", "Water", "Superplasticizer", "Coarse.Agg", "Fine.Agg", "Age", "Concrete.CS")
 
-# Remove rows where Age < 28 days (As Concrete reaches 99% strength at 28 days)
-concrete_df <- concrete_df %>% filter(Age >= 28)
+# Filter data to include only ages 7 days and above
+concrete_df <- concrete_df %>% filter(Age >= 7)
 ```
+
+Age filter is set at 7 and above as compressive strength tests are carried out on day 7 and day 28.
 
 ## Data Exploration
 ```
