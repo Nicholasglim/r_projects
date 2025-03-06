@@ -135,16 +135,18 @@ for (strength in target_strengths) {
 print(optimal_mixes)  # Print the list of optimal mixes
 ```
 
-Optimal Mix
+## Optimal Mix
 
 |        | Cement | BF.Slag | Fly.Ash | Water  | Superplaticizer | Coarse.Agg | Fine.Agg | Penalty Value |
 |--------|--------|---------|---------|--------|-----------------|------------|----------|---------------|
-| M30    | 389.9  | 189     |    0.00 | 145.9  |              22 |      944.7 |    755.8 | -1.93         |
+| M30    | 102.00 | 359.40  |   83.10 | 247.00 |            0.00 |    1145.00 |   852.07 | -1.93         |
 | M40    | 102.00 | 342.16  |    0.00 | 158.85 |            0.00 |     983.48 |   751.98 | -1.16         |
 | M45    | 347.79 | 359.40  |    0.00 | 202.27 |            0.00 |     801.00 |   620.31 | -3.47         |
 | M50    | 256.17 | 338.02  |    0.00 | 121.80 |           12.23 |    1143.02 |   796.36 | -2.84         |
 | M55    | 540.00 | 359.40  |    0.00 | 191.56 |           29.24 |    1118.39 |   857.53 | -2.66         |
 | M60    | 474.03 | 30.56   |    0.00 | 150.27 |            3.37 |    1043.88 |   992.60 | -2.13         |
+
+Bayesian Optimisation is ran under the parameters of 65% and 99% of target Concrete Compressive Strength at 7 days and 28 days respectively.
 
 The penalty values in the table represent how far the predicted strengths at 7 days and 28 days deviate from the expected 65% and 99% of the target strength, respectively. Since the Bayesian optimization aims to minimize this penalty, a lower penalty suggests that the predicted values are closer to the target.
 
@@ -166,7 +168,7 @@ These penalties indicate some deviation but are better than M45. The higher grad
 
 While relatively low, it suggests a slight deviation from the target strengths. The Fly Ash content may be influencing early strength development.
 
-Design Mix Proportion
+## Design Mix Proportion
 
 |     | Cement | Fine.Agg | Coarse.Agg |
 |-----|--------|----------|------------|
