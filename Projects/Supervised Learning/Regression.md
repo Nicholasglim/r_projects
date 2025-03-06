@@ -53,6 +53,90 @@ Scatter Plot
 
 ![Scatter Plot](https://github.com/user-attachments/assets/56c91282-e6f5-4c6e-b7b8-3ba19411f9f9)
 
+```
+# Target Strengths
+target_strengths <- c(30, 40, 45, 50, 55, 60)  # MPa
+
+# Function to Run Bayesian Optimization for a given target strength
+optimize_concrete_mix <- function(target_strength) {
+  
+  # Split data into train and test
+  set.seed(2025)
+  train_index <- createDataPartition(concrete_df$Concrete.CS, p = 0.7, list = FALSE)
+  trainset <- concrete_df[train_index, ]
+  testset <- concrete_df[-train_index, ]
+  
+  # Train Random Forest Models for 7-day and 28-day strength
+  rf_model_7d <- randomForest(
+    Concrete.CS ~ Cement + BF.Slag + Fly.Ash + Water + Superplasticizer + Coarse.Agg + Fine.Agg + Age,
+    data = trainset %>% filter(Age == 7)
+  )
+  
+  rf_model_28d <- randomForest(
+    Concrete.CS ~ Cement + BF.Slag + Fly.Ash + Water + Superplasticizer + Coarse.Agg + Fine.Agg + Age,
+    data = trainset %>% filter(Age == 28)
+  )
+  
+  # Define Bayesian Optimization Function
+  Bayesian_Objective <- function(Cement, BF.Slag, Fly.Ash, Water, Superplasticizer, Coarse.Agg, Fine.Agg) {
+    new_data_7d <- data.frame(Cement, BF.Slag, Fly.Ash, Water, Superplasticizer, Coarse.Agg, Fine.Agg, Age = 7)
+    new_data_28d <- data.frame(Cement, BF.Slag, Fly.Ash, Water, Superplasticizer, Coarse.Agg, Fine.Agg, Age = 28)
+    
+    # Predict the strength for 7-day and 28-day models
+    pred_7d <- predict(rf_model_7d, new_data_7d)
+    pred_28d <- predict(rf_model_28d, new_data_28d)
+    
+    # Define objective function to meet strength criteria
+    target_7d <- 0.65 * target_strength # 65% of target at 7 days
+    penalty <- abs(pred_28d - target_strength) + abs(pred_7d - target_7d) # Penalize deviation from target strengths
+    return(list(Score = -penalty)) # Minimize penalty
+  }
+  
+  # Run Bayesian Optimization
+  BayesSearch <- BayesianOptimization(
+    FUN = Bayesian_Objective,
+    bounds = list(
+      Cement = range(concrete_df$Cement),
+      BF.Slag = range(concrete_df$BF.Slag),
+      Fly.Ash = range(concrete_df$Fly.Ash),
+      Water = range(concrete_df$Water),
+      Superplasticizer = range(concrete_df$Superplasticizer),
+      Coarse.Agg = range(concrete_df$Coarse.Agg),
+      Fine.Agg = range(concrete_df$Fine.Agg)
+    ),
+    init_points = 10,  # Number of random exploration points
+    n_iter = 20,       # Number of iterations
+    verbose = FALSE # Suppress verbose output within the loop
+  )
+  
+  # Extract and round optimal mix values
+  optimal_mix_rounded <- round(BayesSearch$Best_Par, 2)
+  
+  # Extract Cement, Fine Aggregate, and Coarse Aggregate
+  cement <- optimal_mix_rounded["Cement"]
+  fine_agg <- optimal_mix_rounded["Fine.Agg"]
+  coarse_agg <- optimal_mix_rounded["Coarse.Agg"]
+  
+  # Calculate and print ratio
+  ratio <- c(cement, fine_agg, coarse_agg) / min(cement, fine_agg, coarse_agg)
+  cat("For Target Strength ", target_strength, " MPa: Ratio of Cement: Fine Aggregate: Coarse Aggregate is ",
+      paste(round(ratio, 2), collapse = " : "), "\n")
+  
+  return(optimal_mix_rounded) # Return the optimal mix
+}
+
+# Loop through target strengths and optimize
+optimal_mixes <- list() # Store optimal mixes for each target strength
+for (strength in target_strengths) {
+  cat("Optimizing for target strength:", strength, "MPa\n")
+  optimal_mixes[[as.character(strength)]] <- optimize_concrete_mix(strength)
+}
+
+print(optimal_mixes)  # Print the list of optimal mixes
+```
+
+Optimal Mix
+
 |        | Cement | BF.Slag | Fly.Ash | Water  | Superplaticizer | Coarse.Agg | Fine.Agg | Penalty Value |
 |--------|--------|---------|---------|--------|-----------------|------------|----------|---------------|
 | M30    | 389.9  | 189     |    0.00 | 145.9  |              22 |      944.7 |    755.8 | -1.93         |
@@ -61,6 +145,28 @@ Scatter Plot
 | M50    | 256.17 | 338.02  |    0.00 | 121.80 |           12.23 |    1143.02 |   796.36 | -2.84         |
 | M55    | 540.00 | 359.40  |    0.00 | 191.56 |           29.24 |    1118.39 |   857.53 | -2.66         |
 | M60    | 474.03 | 30.56   |    0.00 | 150.27 |            3.37 |    1043.88 |   992.60 | -2.13         |
+
+The penalty values in the table represent how far the predicted strengths at 7 days and 28 days deviate from the expected 65% and 99% of the target strength, respectively. Since the Bayesian optimization aims to minimize this penalty, a lower penalty suggests that the predicted values are closer to the target.
+
+### Interpretation of Penalty Values:
+
+- M40 has the lowest penalty (-1.16)
+
+This indicates that the optimized mix for 40 MPa is the closest to meeting the target strengths at both 7 and 28 days. The mix likely has a well-balanced proportion of materials leading to minimal deviation.
+
+- M45 has the highest penalty (-3.47)
+
+This suggests a more significant deviation from the expected strength values. The mix may require adjustments, such as increasing Cement or optimizing Water and Superplasticizer content, to better match the target.
+
+- M50, M55, and M60 have moderate penalties (-2.84, -2.66, -2.12)
+
+These penalties indicate some deviation but are better than M45. The higher grades (M55 and M60) likely require fine-tuning, particularly in water-cement ratios or superplasticizer usage, to minimize the gap.
+
+- M30 has a penalty of -1.93
+
+While relatively low, it suggests a slight deviation from the target strengths. The Fly Ash content may be influencing early strength development.
+
+Design Mix Proportion
 
 |     | Cement | Fine.Agg | Coarse.Agg |
 |-----|--------|----------|------------|
