@@ -1,10 +1,13 @@
 # Regression: Concrete Compressive Strength Prediction
 
-**Problem Description:** This showcase uses regression techniques to predict concrete compressive strength based on various components in the concrete mixture, such as cement, water, slag, and aggregates, as well as the age of the concrete.
+**Problem Description:**
+This showcase applies regression techniques to predict concrete compressive strength based on various components of the concrete mixture, such as cement, water, slag, and aggregates, as well as the concrete's age.
 
-**Introduction:** Concrete is a fundamental material in construction, essential in buildings, bridges, and even historical landmarks. The dataset consists of the dependent variable: concrete compressive strength, and eight independent variables: cement, blast furnace slag, fly ash, water, superplasticizer, coarse aggregate, fine aggregate, and age. Compressive strength of concrete is a non-linear function of both the age and the constituent ingredients. During hydration, the mixture reacts with water, gaining strength rapidly at first, then gradually over time.
+**Introduction:**
+Concrete is a fundamental construction material used in buildings, bridges, and historical landmarks. The dataset includes the dependent variable—concrete compressive strength—and eight independent variables: cement, blast furnace slag, fly ash, water, superplasticizer, coarse aggregate, fine aggregate, and age. Compressive strength is a non-linear function of both age and constituent materials. During hydration, the mixture reacts with water, rapidly gaining strength initially before stabilizing over time.
 
-**Impact:** By using machine learning, the formulation of concrete can be optimized with data-driven insights, enhancing strength and durability, and overall performance. This approach not only reduces costs and minimizes environmental impact but also improves construction practices, going beyond traditional testing methods like destructive and non-destructive testing to provide more efficient and sustainable solutions.
+**Impact:**
+By leveraging machine learning, concrete formulation can be optimized using data-driven insights to enhance strength, durability, and overall performance. This approach reduces costs, minimizes environmental impact, and improves construction practices. Unlike traditional destructive and non-destructive testing methods, machine learning offers more efficient and sustainable solutions.
 
 ---
 ```
@@ -31,7 +34,7 @@ colnames(concrete_df) <- c("Cement", "BF.Slag", "Fly.Ash", "Water", "Superplasti
 concrete_df <- concrete_df %>% filter(Age >= 7)
 ```
 
-Age filter is set at 7 and above as compressive strength tests are carried out on day 7 and day 28.
+The age filter is set at 7 days and above, as compressive strength tests are commonly conducted on days 7 and 28.
 
 ## Data Exploration
 ```
@@ -148,7 +151,7 @@ print(optimal_mixes)  # Print the list of optimal mixes
 | M55    | 540.00 | 359.40  |    0.00 | 191.56 |           29.24 |    1118.39 |   857.53 | -2.66         |
 | M60    | 474.03 | 30.56   |    0.00 | 150.27 |            3.37 |    1043.88 |   992.60 | -2.13         |
 
-Bayesian Optimisation is ran under the parameters of 65% and 99% of target Concrete Compressive Strength at 7 days and 28 days respectively.
+**Bayesian optimization was conducted based on achieving 65% and 99% of the target compressive strength at 7 and 28 days, respectively.**
 
 The penalty values in the table represent how far the predicted strengths at 7 days and 28 days deviate from the expected 65% and 99% of the target strength, respectively. Since the Bayesian optimization aims to minimize this penalty, a lower penalty suggests that the predicted values are closer to the target.
 
@@ -170,7 +173,7 @@ These penalties indicate some deviation but are better than M45. The higher grad
 
 While relatively low, it suggests a slight deviation from the target strengths. The Fly Ash content may be influencing early strength development.
 
-## Design Mix Proportion
+## Design Mix Proportion Ratio
 
 |     | Cement | Fine.Agg | Coarse.Agg |
 |-----|--------|----------|------------|
@@ -180,3 +183,9 @@ While relatively low, it suggests a slight deviation from the target strengths. 
 | M50 | 1      | 3.11     | 4.46       |
 | M55 | 1      | 1.59     | 2.07       |
 | M60 | 1      | 2.09     | 2.2        |
+
+---
+# Conclusion & Disclaimer
+The results obtained in this project are based on statistical modeling and machine learning optimization techniques. While Bayesian Optimization provides insights into potential mix proportions for achieving target concrete compressive strengths, **these findings should not be used as actual design mix recommendations for construction**. Real-world concrete performance is influenced by various external factors, including temperature, humidity, curing conditions, and material variability, which are not fully accounted for in this dataset.
+
+Further experimental validation and field testing under diverse environmental conditions are necessary to refine these predictions. For practical applications in structural engineering, mix designs should always be developed in accordance with established industry standards, building codes, and laboratory testing protocols to ensure safety, durability, and compliance with regulatory requirements.
