@@ -6,28 +6,28 @@
 
 **Impact:** Through machine learning algorithms, early detection of heart disease can be streamlined, helping doctors and healthcare professionals identify at-risk patients and take timely preventive or remedial action. This could enhance healthcare outcomes and reduce the overall burden of cardiovascular disease.
 
-### Logistic Regression
+## Logistic Regression
 ![image](https://github.com/user-attachments/assets/256a3083-ba5d-4411-ba86-81e6c37ad727)
 ![image](https://github.com/user-attachments/assets/c6cd38f1-b666-4f8b-ad9e-552d035eab2e)
-**Fig.19 Logistic Regression model 1 (left) & Logistic Regression model 2 with manual removal (right)**
-```
+**Fig.1 Logistic Regression model 1 (left) & Logistic Regression model 2 with manual removal (right)**
+
 Logistic Regression 2 have variables (Age, RestingBP, RestingECGST, & MaxHR) removed due to p-value >0.05.
-```
-### Bootstrap
+
+## Bootstrap
 ![image](https://github.com/user-attachments/assets/459858e8-9eed-48a8-a607-2ce5eb8a52e5)
 
-**Fig.20 Bootstrap Logistic Regression Model**
+**Fig.2 Bootstrap Logistic Regression Model**
 
 According to the logistic regression with manual removal of non-statistically significant variables of age, restingBP, restingECG & maxHR in fig.20 (right), the Akaike Information Criterion (AIC) is 621.61. However, the bootstrap logistic regression removed restingECG, restingBP and maxHR, which was ¾ of the variables manually removed in the non-bootstrap logistic regression, with an AIC of 619.81. It appears that the variable age, deemed non-statistically significant in the standard logistic regression contributed to a better fitting model in the bootstrap logistic regression model.
 
 ![image](https://github.com/user-attachments/assets/756c6594-82e0-40b7-99e4-0e09c994e8d7)
 ![image](https://github.com/user-attachments/assets/f9861bc9-b8f3-44d2-9b31-2d3657409b29)
 
-**Fig.21 Visualisation (left) and details (right) of confusion matrix**
+**Fig.3 Visualisation (left) and details (right) of confusion matrix**
 
 Confusion matrix accuracy is 86.71%. The percentage of false positives is 13.29%.
 
-### Lasso Regression Model
+## Lasso Regression Model
 
 Using a Train-Test set split of 70:30 of the dataset.
 
@@ -103,7 +103,7 @@ Using a Train-Test set split of 70:30 of the dataset.
 68 16 52.18 0.000591
 69 16 52.18 0.000538
 ```
-**Fig.22 Lasso Regularised Model**
+**Fig.4 Lasso Regularised Model**
 
 After doing model selection, the logistic regression model is fitted with lasso regularisation, the degree of freedom is 16. The regularisation path included a range of lambda values, and the selected lambda of **0.004575469** minimises the cross-validated error. The model explained 52.18% of the deviance in the training data. Hence, a lambda of 0.0004575469 will result in a test set accuracy of 87.64%.
 
