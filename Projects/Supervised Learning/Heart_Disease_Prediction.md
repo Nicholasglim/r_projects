@@ -1,4 +1,4 @@
-# Classification: Heart Disease Prediction
+# Heart Disease Prediction Using Machine Learning
 
 **Problem Description:** This showcase uses classification methods to predict the likelihood of heart disease based on various health indicators, such as age, cholesterol levels, blood pressure, and other key factors
 
