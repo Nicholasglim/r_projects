@@ -1,13 +1,13 @@
-# Regression: Concrete Compressive Strength Prediction
+# Regression-Based Approach for Proposing Data-Driven Concrete Mix Ratios
 
 **Problem Description:**
-This showcase applies regression techniques to predict concrete compressive strength based on various components of the concrete mixture, such as cement, water, slag, and aggregates, as well as the concrete's age.
+This project applies regression techniques to analyze concrete mix components and proposes a data-driven mix ratio based on observed relationships in the dataset. As there are no predefined design mixes for M30 and above, the goal is to identify suitable ratio for cement : fine aggregates : coarse aggregates, and other materials that can achieve desired compressive strength benchmarks.
 
 **Introduction:**
-Concrete is a fundamental construction material used in buildings, bridges, and historical landmarks. The dataset includes the dependent variable—concrete compressive strength—and eight independent variables: cement, blast furnace slag, fly ash, water, superplasticizer, coarse aggregate, fine aggregate, and age. Compressive strength is a non-linear function of both age and constituent materials. During hydration, the mixture reacts with water, rapidly gaining strength initially before stabilizing over time.
+Concrete is a fundamental construction material used in buildings, bridges, and historical landmarks. The dataset includes the dependent variable—concrete compressive strength—and eight independent variables: cement, blast furnace slag, fly ash, water, superplasticizer, coarse aggregate, fine aggregate, and age. Compressive strength is a non-linear function of both age and constituent materials. By analyzing the dataset, mix ratios can be proposed that aligns with strength development trends observed in real-world data.
 
 **Impact:**
-By leveraging machine learning, concrete formulation can be optimized using data-driven insights to enhance strength, durability, and overall performance. This approach reduces costs, minimizes environmental impact, and improves construction practices. Unlike traditional destructive and non-destructive testing methods, machine learning offers more efficient and sustainable solutions.
+This approach provides an additional way to determine concrete design mixes without relying solely on established empirical methods. By utilizing machine learning and regression analysis, new mix ratios can be proposed based on actual data rather than predefined standards. This can help in exploring innovative design mixes, improving material efficiency, and offering insights into how different mix components contribute to strength development.
 
 ---
 ```
