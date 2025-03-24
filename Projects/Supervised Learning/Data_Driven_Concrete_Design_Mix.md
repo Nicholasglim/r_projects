@@ -1,4 +1,4 @@
-# Proposing Data-Driven Concrete Mix Ratios Using Regression
+# Proposing Data-Driven Concrete Design Mix Ratios Using Regression
 
 **Problem Description:**
 This project applies regression techniques to analyze concrete mix components and proposes a data-driven mix ratio based on observed relationships in the dataset. As there are no predefined design mixes for M30 and above, the goal is to identify suitable ratio for cement : fine aggregates : coarse aggregates, and other materials that can achieve desired compressive strength benchmarks.
@@ -151,9 +151,9 @@ print(optimal_mixes)  # Print the list of optimal mixes
 | M55    | 540.00 | 359.40  |    0.00 | 191.56 |           29.24 |    1118.39 |   857.53 | -2.66         |
 | M60    | 474.03 | 30.56   |    0.00 | 150.27 |            3.37 |    1043.88 |   992.60 | -2.13         |
 
-**Bayesian optimization was conducted based on achieving 65% and 99% of the target compressive strength at 7 and 28 days, respectively.**
+**Bayesian optimization was conducted to achieve 65% of the target compressive strength at 7 days and 99% at 28 days.**
 
-The penalty values in the table represent how far the predicted strengths at 7 days and 28 days deviate from the expected 65% and 99% of the target strength, respectively. Since the Bayesian optimization aims to minimize this penalty, a lower penalty suggests that the predicted values are closer to the target.
+The penalty values in the table indicate the deviation of the predicted strengths at 7 and 28 days from the expected 65% and 99% of the target strength, respectively. Since Bayesian optimization aims to minimize this penalty, a lower value suggests that the predictions are closer to the target.
 
 ### Interpretation of Penalty Values:
 
