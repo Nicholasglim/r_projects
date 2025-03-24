@@ -1,4 +1,4 @@
-# Regression-Based Approach for Proposing Data-Driven Concrete Mix Ratios
+# Proposing Data-Driven Concrete Mix Ratios Using Regression
 
 **Problem Description:**
 This project applies regression techniques to analyze concrete mix components and proposes a data-driven mix ratio based on observed relationships in the dataset. As there are no predefined design mixes for M30 and above, the goal is to identify suitable ratio for cement : fine aggregates : coarse aggregates, and other materials that can achieve desired compressive strength benchmarks.
