@@ -33,7 +33,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 
 # Load Data
 ```{r load .csv file}
-data <- read.csv("dataset_for_datascience_assignment.csv") # Please set working directory manually if dataset does not load (e.g., `setwd("~/Documents/Wolt_Analysis")` in R, or in RStudio: Session > Set Working Directory > To Source File Location).
+data <- read.csv("Wolt_dataset.csv") # Please set working directory manually if dataset does not load (e.g., `setwd("~/Documents/Wolt_dataset")` in R, or in RStudio: Session > Set Working Directory > To Source File Location).
 ```
 
 # Data Exploration
